@@ -23,14 +23,11 @@
     <string name="show_password">Показать пароль</string>
     <string name="hide_password">Скрыть пароль</string>
     <string name="pick_date">Выбрать дату</string>
-    <string name="hello_login">Привет!\nРад видеть тебя\nснова</string>
-    <string name="hello_signup">Привет!\nДавай знакомиться</string>
     <string name="male">Мужской пол</string>
     <string name="female">Женский пол</string>
     <string name="welcome_user">Привет, %1$s!</string>
     <string name="home_caption">ТРЕНИРОВКА РЕЧИ</string>
     <string name="home_title">Говори\nувереннее</string>
-    <string name="training">Тренировка</string>
     <string name="training_hint">Запиши выступление и узнай, как улучшить свою речь</string>
     <string name="start_training">Начать тренировку  →</string>
     <string name="articles_hint">Советы по публичным выступлениям</string>

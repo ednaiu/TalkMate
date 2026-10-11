@@ -24,3 +24,7 @@ ios/TalkMate.xcodeproj/
 xcuserdata/
 
 .DS_Store
+
+# Рабочие материалы дизайна и сторонний плагин: в проект не входят
+output/
+taste-skill/

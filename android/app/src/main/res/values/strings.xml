@@ -4,13 +4,10 @@
     <string name="app_name">TalkMate</string>
     <string name="talk" translatable="false">Talk</string>
     <string name="mate" translatable="false">Mate</string>
-    <string name="login_caps" translatable="false">LOGIN</string>
-    <string name="sign_up" translatable="false">Sing Up</string>
     <string name="welcome_subtitle">Practice your speech and get ready\nfor public speaking</string>
     <string name="create_account">Create account</string>
     <string name="have_account">Already have an account?</string>
     <string name="log_in">Log in</string>
-    <string name="sign_up_caps" translatable="false">Sing UP</string>
     <string name="brand_name" translatable="false">Talk Mate</string>
     <string name="login_title">Welcome back!</string>
     <string name="login_subtitle">Log in to continue practicing</string>
@@ -33,22 +30,14 @@
     <string name="show_password">Show password</string>
     <string name="hide_password">Hide password</string>
     <string name="pick_date">Pick a date</string>
-    <string name="brand" translatable="false">speakspeak</string>
     <string name="stats" translatable="false">Stats</string>
     <string name="ooops" translatable="false">Ooops…</string>
-    <string name="hello_login">Hello!\nGood to see you\nagain</string>
-    <string name="hello_signup">Hello!\nLet us get acquainted</string>
-    <string name="hint_name" translatable="false">Username</string>
     <string name="hint_email" translatable="false">Email</string>
-    <string name="hint_password" translatable="false">Password</string>
-    <string name="hint_phone" translatable="false">Phone</string>
-    <string name="hint_birth" translatable="false">Date of Birth</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="welcome_user">Hello, %1$s!</string>
     <string name="home_caption">SPEECH PRACTICE</string>
     <string name="home_title">Speak with\nconfidence</string>
-    <string name="training">Practice</string>
     <string name="training_hint">Record a talk and learn how to improve your speech</string>
     <string name="start_training">Start practice  →</string>
     <string name="articles_hint">Tips on public speaking</string>
