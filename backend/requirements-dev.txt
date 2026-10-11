@@ -1,0 +1,7 @@
+-r requirements.txt
+pytest>=8
+# Для обучения и замеров качества моделей (каталог training/)
+pyarrow>=15
+jiwer>=3
+# Замер привязки речи к слайдам на записях докладов (training/slide_frames.py)
+yt-dlp

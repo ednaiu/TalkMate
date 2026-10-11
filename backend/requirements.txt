@@ -1,0 +1,12 @@
+Flask==3.0.3
+SQLAlchemy==2.0.36
+PyMySQL==1.1.1
+cryptography>=42
+PyJWT==2.9.0
+requests>=2.31
+onnx-asr[cpu,hub]>=0.12
+num2words>=0.5
+numpy>=1.26,<2.3
+librosa==0.10.2.post1
+soundfile>=0.12
+gunicorn>=22

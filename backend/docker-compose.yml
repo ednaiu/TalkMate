@@ -1,0 +1,22 @@
+# MySQL для сервера TalkMate. Запуск: docker compose up -d
+services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: talkmate
+      MYSQL_USER: talkmate
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-talkmate}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-talkmate-root}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    ports:
+      - "127.0.0.1:3307:3306"
+    volumes:
+      - talkmate-mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-ptalkmate-root"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  talkmate-mysql:
