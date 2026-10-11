@@ -1,0 +1,767 @@
+{
+ "negative_threshold": 0.6,
+ "val": {
+  "epoch": 34,
+  "loss": 0.4211,
+  "dusha": 0.7625,
+  "resd": 1.0,
+  "mean": 0.7625
+ },
+ "dusha": {
+  "baseline": {
+   "n": 2735,
+   "neutral_false_alarm": 0.5211,
+   "accuracy": 0.1653,
+   "macro_f1": 0.2447,
+   "uar": 0.1685,
+   "per_class": {
+    "anger": {
+     "precision": 0.5767,
+     "recall": 0.1767,
+     "f1": 0.2705,
+     "support": 532
+    },
+    "happiness": {
+     "precision": 0.3304,
+     "recall": 0.177,
+     "f1": 0.2305,
+     "support": 418
+    },
+    "neutral": {
+     "precision": 0.8435,
+     "recall": 0.1588,
+     "f1": 0.2672,
+     "support": 1562
+    },
+    "sadness": {
+     "precision": 0.3025,
+     "recall": 0.1614,
+     "f1": 0.2105,
+     "support": 223
+    }
+   },
+   "confusion": {
+    "anger": {
+     "anger": 94,
+     "disgust": 132,
+     "enthusiasm": 64,
+     "fear": 146,
+     "happiness": 83,
+     "neutral": 9,
+     "sadness": 4
+    },
+    "happiness": {
+     "anger": 39,
+     "disgust": 53,
+     "enthusiasm": 202,
+     "fear": 32,
+     "happiness": 74,
+     "neutral": 15,
+     "sadness": 3
+    },
+    "neutral": {
+     "anger": 28,
+     "disgust": 180,
+     "enthusiasm": 436,
+     "fear": 530,
+     "happiness": 64,
+     "neutral": 248,
+     "sadness": 76
+    },
+    "sadness": {
+     "anger": 2,
+     "disgust": 9,
+     "enthusiasm": 25,
+     "fear": 126,
+     "happiness": 3,
+     "neutral": 22,
+     "sadness": 36
+    }
+   }
+  },
+  "head": {
+   "n": 2735,
+   "neutral_false_alarm": 0.1889,
+   "accuracy": 0.7539,
+   "macro_f1": 0.7121,
+   "uar": 0.7532,
+   "per_class": {
+    "anger": {
+     "precision": 0.6843,
+     "recall": 0.8271,
+     "f1": 0.7489,
+     "support": 532
+    },
+    "happiness": {
+     "precision": 0.6791,
+     "recall": 0.7847,
+     "f1": 0.7281,
+     "support": 418
+    },
+    "neutral": {
+     "precision": 0.8767,
+     "recall": 0.733,
+     "f1": 0.7985,
+     "support": 1562
+    },
+    "sadness": {
+     "precision": 0.5017,
+     "recall": 0.6682,
+     "f1": 0.5731,
+     "support": 223
+    }
+   },
+   "confusion": {
+    "anger": {
+     "anger": 440,
+     "disgust": 2,
+     "enthusiasm": 0,
+     "fear": 0,
+     "happiness": 26,
+     "neutral": 56,
+     "sadness": 8
+    },
+    "happiness": {
+     "anger": 35,
+     "disgust": 0,
+     "enthusiasm": 1,
+     "fear": 0,
+     "happiness": 328,
+     "neutral": 48,
+     "sadness": 6
+    },
+    "neutral": {
+     "anger": 158,
+     "disgust": 0,
+     "enthusiasm": 0,
+     "fear": 3,
+     "happiness": 122,
+     "neutral": 1145,
+     "sadness": 134
+    },
+    "sadness": {
+     "anger": 10,
+     "disgust": 0,
+     "enthusiasm": 0,
+     "fear": 0,
+     "happiness": 7,
+     "neutral": 57,
+     "sadness": 149
+    }
+   }
+  },
+  "head_with_threshold": {
+   "n": 2735,
+   "neutral_false_alarm": 0.0967,
+   "accuracy": 0.7817,
+   "macro_f1": 0.7304,
+   "uar": 0.7394,
+   "per_class": {
+    "anger": {
+     "precision": 0.7863,
+     "recall": 0.7538,
+     "f1": 0.7697,
+     "support": 532
+    },
+    "happiness": {
+     "precision": 0.632,
+     "recall": 0.8134,
+     "f1": 0.7113,
+     "support": 418
+    },
+    "neutral": {
+     "precision": 0.8539,
+     "recall": 0.8118,
+     "f1": 0.8323,
+     "support": 1562
+    },
+    "sadness": {
+     "precision": 0.6418,
+     "recall": 0.5785,
+     "f1": 0.6085,
+     "support": 223
+    }
+   },
+   "confusion": {
+    "anger": {
+     "anger": 401,
+     "enthusiasm": 0,
+     "happiness": 42,
+     "neutral": 86,
+     "sadness": 3
+    },
+    "happiness": {
+     "anger": 20,
+     "enthusiasm": 1,
+     "happiness": 340,
+     "neutral": 56,
+     "sadness": 1
+    },
+    "neutral": {
+     "anger": 83,
+     "enthusiasm": 0,
+     "happiness": 143,
+     "neutral": 1268,
+     "sadness": 68
+    },
+    "sadness": {
+     "anger": 6,
+     "enthusiasm": 0,
+     "happiness": 13,
+     "neutral": 75,
+     "sadness": 129
+    }
+   }
+  },
+  "threshold_curve": [
+   {
+    "threshold": 0.0,
+    "accuracy": 0.7539,
+    "macro_f1": 0.7121,
+    "uar": 0.7532,
+    "neutral_false_alarm": 0.1889
+   },
+   {
+    "threshold": 0.3,
+    "accuracy": 0.7539,
+    "macro_f1": 0.7123,
+    "uar": 0.7529,
+    "neutral_false_alarm": 0.1882
+   },
+   {
+    "threshold": 0.35,
+    "accuracy": 0.7539,
+    "macro_f1": 0.7113,
+    "uar": 0.7505,
+    "neutral_false_alarm": 0.1869
+   },
+   {
+    "threshold": 0.4,
+    "accuracy": 0.7558,
+    "macro_f1": 0.7128,
+    "uar": 0.751,
+    "neutral_false_alarm": 0.1812
+   },
+   {
+    "threshold": 0.45,
+    "accuracy": 0.7598,
+    "macro_f1": 0.7147,
+    "uar": 0.7485,
+    "neutral_false_alarm": 0.1639
+   },
+   {
+    "threshold": 0.5,
+    "accuracy": 0.7634,
+    "macro_f1": 0.7156,
+    "uar": 0.743,
+    "neutral_false_alarm": 0.1466
+   },
+   {
+    "threshold": 0.55,
+    "accuracy": 0.7744,
+    "macro_f1": 0.7244,
+    "uar": 0.7412,
+    "neutral_false_alarm": 0.1172
+   },
+   {
+    "threshold": 0.6,
+    "accuracy": 0.7817,
+    "macro_f1": 0.7304,
+    "uar": 0.7394,
+    "neutral_false_alarm": 0.0967
+   },
+   {
+    "threshold": 0.65,
+    "accuracy": 0.7821,
+    "macro_f1": 0.727,
+    "uar": 0.7301,
+    "neutral_false_alarm": 0.0845
+   },
+   {
+    "threshold": 0.7,
+    "accuracy": 0.7828,
+    "macro_f1": 0.7233,
+    "uar": 0.7194,
+    "neutral_false_alarm": 0.0711
+   },
+   {
+    "threshold": 0.75,
+    "accuracy": 0.7737,
+    "macro_f1": 0.704,
+    "uar": 0.695,
+    "neutral_false_alarm": 0.0627
+   },
+   {
+    "threshold": 0.8,
+    "accuracy": 0.7704,
+    "macro_f1": 0.6896,
+    "uar": 0.6731,
+    "neutral_false_alarm": 0.0423
+   },
+   {
+    "threshold": 0.85,
+    "accuracy": 0.762,
+    "macro_f1": 0.6696,
+    "uar": 0.6503,
+    "neutral_false_alarm": 0.0307
+   },
+   {
+    "threshold": 0.9,
+    "accuracy": 0.7455,
+    "macro_f1": 0.6258,
+    "uar": 0.6089,
+    "neutral_false_alarm": 0.0147
+   }
+  ]
+ },
+ "resd": {
+  "baseline": {
+   "n": 280,
+   "neutral_false_alarm": 0.0526,
+   "accuracy": 0.8107,
+   "macro_f1": 0.8074,
+   "uar": 0.8095,
+   "per_class": {
+    "anger": {
+     "precision": 0.9286,
+     "recall": 0.8864,
+     "f1": 0.907,
+     "support": 44
+    },
+    "disgust": {
+     "precision": 0.7273,
+     "recall": 0.8649,
+     "f1": 0.7901,
+     "support": 37
+    },
+    "enthusiasm": {
+     "precision": 0.7895,
+     "recall": 0.75,
+     "f1": 0.7692,
+     "support": 40
+    },
+    "fear": {
+     "precision": 0.8649,
+     "recall": 0.7111,
+     "f1": 0.7805,
+     "support": 45
+    },
+    "happiness": {
+     "precision": 0.8222,
+     "recall": 0.8409,
+     "f1": 0.8315,
+     "support": 44
+    },
+    "neutral": {
+     "precision": 0.7556,
+     "recall": 0.8947,
+     "f1": 0.8193,
+     "support": 38
+    },
+    "sadness": {
+     "precision": 0.7931,
+     "recall": 0.7188,
+     "f1": 0.7541,
+     "support": 32
+    }
+   },
+   "confusion": {
+    "anger": {
+     "anger": 39,
+     "disgust": 3,
+     "enthusiasm": 0,
+     "fear": 0,
+     "happiness": 2,
+     "neutral": 0,
+     "sadness": 0
+    },
+    "disgust": {
+     "anger": 0,
+     "disgust": 32,
+     "enthusiasm": 1,
+     "fear": 1,
+     "happiness": 0,
+     "neutral": 0,
+     "sadness": 3
+    },
+    "enthusiasm": {
+     "anger": 0,
+     "disgust": 1,
+     "enthusiasm": 30,
+     "fear": 1,
+     "happiness": 2,
+     "neutral": 6,
+     "sadness": 0
+    },
+    "fear": {
+     "anger": 2,
+     "disgust": 2,
+     "enthusiasm": 2,
+     "fear": 32,
+     "happiness": 3,
+     "neutral": 1,
+     "sadness": 3
+    },
+    "happiness": {
+     "anger": 1,
+     "disgust": 3,
+     "enthusiasm": 2,
+     "fear": 1,
+     "happiness": 37,
+     "neutral": 0,
+     "sadness": 0
+    },
+    "neutral": {
+     "anger": 0,
+     "disgust": 2,
+     "enthusiasm": 1,
+     "fear": 0,
+     "happiness": 1,
+     "neutral": 34,
+     "sadness": 0
+    },
+    "sadness": {
+     "anger": 0,
+     "disgust": 1,
+     "enthusiasm": 2,
+     "fear": 2,
+     "happiness": 0,
+     "neutral": 4,
+     "sadness": 23
+    }
+   }
+  },
+  "head": {
+   "n": 280,
+   "neutral_false_alarm": 0.0526,
+   "accuracy": 0.8107,
+   "macro_f1": 0.8117,
+   "uar": 0.8118,
+   "per_class": {
+    "anger": {
+     "precision": 0.8667,
+     "recall": 0.8864,
+     "f1": 0.8764,
+     "support": 44
+    },
+    "disgust": {
+     "precision": 0.8158,
+     "recall": 0.8378,
+     "f1": 0.8267,
+     "support": 37
+    },
+    "enthusiasm": {
+     "precision": 0.8056,
+     "recall": 0.725,
+     "f1": 0.7632,
+     "support": 40
+    },
+    "fear": {
+     "precision": 0.9394,
+     "recall": 0.6889,
+     "f1": 0.7949,
+     "support": 45
+    },
+    "happiness": {
+     "precision": 0.6786,
+     "recall": 0.8636,
+     "f1": 0.76,
+     "support": 44
+    },
+    "neutral": {
+     "precision": 0.8049,
+     "recall": 0.8684,
+     "f1": 0.8354,
+     "support": 38
+    },
+    "sadness": {
+     "precision": 0.8387,
+     "recall": 0.8125,
+     "f1": 0.8254,
+     "support": 32
+    }
+   },
+   "confusion": {
+    "anger": {
+     "anger": 39,
+     "disgust": 1,
+     "enthusiasm": 0,
+     "fear": 0,
+     "happiness": 3,
+     "neutral": 1,
+     "sadness": 0
+    },
+    "disgust": {
+     "anger": 2,
+     "disgust": 31,
+     "enthusiasm": 1,
+     "fear": 0,
+     "happiness": 1,
+     "neutral": 0,
+     "sadness": 2
+    },
+    "enthusiasm": {
+     "anger": 0,
+     "disgust": 0,
+     "enthusiasm": 29,
+     "fear": 0,
+     "happiness": 5,
+     "neutral": 6,
+     "sadness": 0
+    },
+    "fear": {
+     "anger": 2,
+     "disgust": 1,
+     "enthusiasm": 2,
+     "fear": 31,
+     "happiness": 5,
+     "neutral": 1,
+     "sadness": 3
+    },
+    "happiness": {
+     "anger": 2,
+     "disgust": 2,
+     "enthusiasm": 2,
+     "fear": 0,
+     "happiness": 38,
+     "neutral": 0,
+     "sadness": 0
+    },
+    "neutral": {
+     "anger": 0,
+     "disgust": 2,
+     "enthusiasm": 0,
+     "fear": 0,
+     "happiness": 3,
+     "neutral": 33,
+     "sadness": 0
+    },
+    "sadness": {
+     "anger": 0,
+     "disgust": 1,
+     "enthusiasm": 2,
+     "fear": 2,
+     "happiness": 1,
+     "neutral": 0,
+     "sadness": 26
+    }
+   }
+  },
+  "head_with_threshold": {
+   "n": 280,
+   "neutral_false_alarm": 0.0263,
+   "accuracy": 0.775,
+   "macro_f1": 0.7769,
+   "uar": 0.7748,
+   "per_class": {
+    "anger": {
+     "precision": 0.9737,
+     "recall": 0.8409,
+     "f1": 0.9024,
+     "support": 44
+    },
+    "disgust": {
+     "precision": 0.8286,
+     "recall": 0.7838,
+     "f1": 0.8056,
+     "support": 37
+    },
+    "enthusiasm": {
+     "precision": 0.725,
+     "recall": 0.725,
+     "f1": 0.725,
+     "support": 40
+    },
+    "fear": {
+     "precision": 0.963,
+     "recall": 0.5778,
+     "f1": 0.7222,
+     "support": 45
+    },
+    "happiness": {
+     "precision": 0.6061,
+     "recall": 0.9091,
+     "f1": 0.7273,
+     "support": 44
+    },
+    "neutral": {
+     "precision": 0.7021,
+     "recall": 0.8684,
+     "f1": 0.7765,
+     "support": 38
+    },
+    "sadness": {
+     "precision": 0.8519,
+     "recall": 0.7188,
+     "f1": 0.7797,
+     "support": 32
+    }
+   },
+   "confusion": {
+    "anger": {
+     "anger": 37,
+     "disgust": 1,
+     "enthusiasm": 0,
+     "fear": 0,
+     "happiness": 5,
+     "neutral": 1,
+     "sadness": 0
+    },
+    "disgust": {
+     "anger": 0,
+     "disgust": 29,
+     "enthusiasm": 2,
+     "fear": 0,
+     "happiness": 2,
+     "neutral": 3,
+     "sadness": 1
+    },
+    "enthusiasm": {
+     "anger": 0,
+     "disgust": 0,
+     "enthusiasm": 29,
+     "fear": 0,
+     "happiness": 5,
+     "neutral": 6,
+     "sadness": 0
+    },
+    "fear": {
+     "anger": 1,
+     "disgust": 1,
+     "enthusiasm": 2,
+     "fear": 26,
+     "happiness": 9,
+     "neutral": 3,
+     "sadness": 3
+    },
+    "happiness": {
+     "anger": 0,
+     "disgust": 2,
+     "enthusiasm": 2,
+     "fear": 0,
+     "happiness": 40,
+     "neutral": 0,
+     "sadness": 0
+    },
+    "neutral": {
+     "anger": 0,
+     "disgust": 1,
+     "enthusiasm": 1,
+     "fear": 0,
+     "happiness": 3,
+     "neutral": 33,
+     "sadness": 0
+    },
+    "sadness": {
+     "anger": 0,
+     "disgust": 1,
+     "enthusiasm": 4,
+     "fear": 1,
+     "happiness": 2,
+     "neutral": 1,
+     "sadness": 23
+    }
+   }
+  },
+  "threshold_curve": [
+   {
+    "threshold": 0.0,
+    "accuracy": 0.8107,
+    "macro_f1": 0.8117,
+    "uar": 0.8118,
+    "neutral_false_alarm": 0.0526
+   },
+   {
+    "threshold": 0.3,
+    "accuracy": 0.8107,
+    "macro_f1": 0.8117,
+    "uar": 0.8118,
+    "neutral_false_alarm": 0.0526
+   },
+   {
+    "threshold": 0.35,
+    "accuracy": 0.8071,
+    "macro_f1": 0.8084,
+    "uar": 0.8086,
+    "neutral_false_alarm": 0.0526
+   },
+   {
+    "threshold": 0.4,
+    "accuracy": 0.8107,
+    "macro_f1": 0.8124,
+    "uar": 0.8119,
+    "neutral_false_alarm": 0.0526
+   },
+   {
+    "threshold": 0.45,
+    "accuracy": 0.8071,
+    "macro_f1": 0.8087,
+    "uar": 0.808,
+    "neutral_false_alarm": 0.0526
+   },
+   {
+    "threshold": 0.5,
+    "accuracy": 0.7964,
+    "macro_f1": 0.7994,
+    "uar": 0.7985,
+    "neutral_false_alarm": 0.0263
+   },
+   {
+    "threshold": 0.55,
+    "accuracy": 0.7929,
+    "macro_f1": 0.7955,
+    "uar": 0.7953,
+    "neutral_false_alarm": 0.0263
+   },
+   {
+    "threshold": 0.6,
+    "accuracy": 0.775,
+    "macro_f1": 0.7769,
+    "uar": 0.7748,
+    "neutral_false_alarm": 0.0263
+   },
+   {
+    "threshold": 0.65,
+    "accuracy": 0.7536,
+    "macro_f1": 0.755,
+    "uar": 0.7524,
+    "neutral_false_alarm": 0.0263
+   },
+   {
+    "threshold": 0.7,
+    "accuracy": 0.7429,
+    "macro_f1": 0.7442,
+    "uar": 0.7409,
+    "neutral_false_alarm": 0.0263
+   },
+   {
+    "threshold": 0.75,
+    "accuracy": 0.7357,
+    "macro_f1": 0.7378,
+    "uar": 0.7338,
+    "neutral_false_alarm": 0.0
+   },
+   {
+    "threshold": 0.8,
+    "accuracy": 0.7214,
+    "macro_f1": 0.7245,
+    "uar": 0.719,
+    "neutral_false_alarm": 0.0
+   },
+   {
+    "threshold": 0.85,
+    "accuracy": 0.6964,
+    "macro_f1": 0.6985,
+    "uar": 0.6947,
+    "neutral_false_alarm": 0.0
+   },
+   {
+    "threshold": 0.9,
+    "accuracy": 0.6393,
+    "macro_f1": 0.6303,
+    "uar": 0.6333,
+    "neutral_false_alarm": 0.0
+   }
+  ]
+ }
+}
