@@ -1,0 +1,50 @@
+{
+ "id": "EXpzk3nKbp4",
+ "spans": [
+  {
+   "start": 0,
+   "end": 9,
+   "slide": 1
+  },
+  {
+   "start": 9,
+   "end": 25,
+   "slide": 2
+  },
+  {
+   "start": 25,
+   "end": 36,
+   "slide": 3
+  },
+  {
+   "start": 36,
+   "end": 67,
+   "slide": 4
+  },
+  {
+   "start": 67,
+   "end": 89,
+   "slide": 5
+  },
+  {
+   "start": 89,
+   "end": 153,
+   "slide": 6
+  },
+  {
+   "start": 153,
+   "end": 264,
+   "slide": 7
+  },
+  {
+   "start": 264,
+   "end": 344,
+   "slide": 8
+  },
+  {
+   "start": 344,
+   "end": 367,
+   "slide": 9
+  }
+ ]
+}

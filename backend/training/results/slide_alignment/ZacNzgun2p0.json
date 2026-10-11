@@ -1,0 +1,50 @@
+{
+ "id": "ZacNzgun2p0",
+ "spans": [
+  {
+   "start": 0,
+   "end": 12,
+   "slide": 1
+  },
+  {
+   "start": 12,
+   "end": 55,
+   "slide": 2
+  },
+  {
+   "start": 55,
+   "end": 101,
+   "slide": 3
+  },
+  {
+   "start": 101,
+   "end": 141,
+   "slide": 4
+  },
+  {
+   "start": 141,
+   "end": 187,
+   "slide": 5
+  },
+  {
+   "start": 187,
+   "end": 246,
+   "slide": 6
+  },
+  {
+   "start": 246,
+   "end": 279,
+   "slide": 7
+  },
+  {
+   "start": 279,
+   "end": 325,
+   "slide": 8
+  },
+  {
+   "start": 325,
+   "end": 330,
+   "slide": 9
+  }
+ ]
+}
