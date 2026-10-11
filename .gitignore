@@ -1,0 +1,26 @@
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Данные пользователей и скачанные модели
+backend/talkmate.db
+backend/uploads/
+backend/models/
+backend/data/
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+.idea/
+*.iml
+
+# iOS
+ios/build/
+ios/TalkMate.xcodeproj/
+xcuserdata/
+
+.DS_Store
