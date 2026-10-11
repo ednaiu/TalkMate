@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pink">#FCE4EC</color>
+    <color name="pink_card">#FCE4EC</color>
+    <color name="pink_line">#F7D3DF</color>
+    <color name="pink_shape">#F7D3DF</color>
+    <color name="blue">#8C9EF2</color>
+    <color name="blue_strong">#4664D6</color>
+    <color name="blue_dark">#5B6FD6</color>
+    <color name="blue_card">#97A8F5</color>
+    <color name="blue_light">#C9D2FA</color>
+    <color name="card">#FCFCFF</color>
+    <color name="paper">#FBFBF8</color>
+    <color name="subtitle">#45454D</color>
+    <color name="field_fill">#F4F4FA</color>
+    <color name="field_stroke">#DADDEA</color>
+    <color name="field_label">#3C3F52</color>
+    <color name="field_hint_soft">#8A8FA3</color>
+    <color name="white">#FFFFFF</color>
+    <color name="ink">#111111</color>
+    <color name="grey_title">#5C5C61</color>
+    <color name="grey_text">#8E8E93</color>
+    <color name="grey_hint">#B9C0E8</color>
+    <!-- Подсказка в поле: темнее макета, иначе на белом её почти не видно -->
+    <color name="grey_field_hint">#8F98CC</color>
+    <color name="hello">#7C7780</color>
+    <color name="error">#D2456F</color>
+    <color name="nose">#B5DBA0</color>
+    <color name="zone">#33FFFFFF</color>
+</resources>

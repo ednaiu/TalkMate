@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-feature android:name="android.hardware.microphone" android:required="true" />
+
+    <application
+        android:name=".TalkMateApp"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.TalkMate.White">
+
+        <!-- Хранит выбранный в приложении язык на Android 12 и старше; новее это делает сама система. -->
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data android:name="autoStoreLocales" android:value="true" />
+        </service>
+
+        <activity
+            android:name=".ui.WelcomeActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TalkMate.Pink">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.LoginActivity" android:theme="@style/Theme.TalkMate.Pink" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.SignUpActivity" android:theme="@style/Theme.TalkMate.Pink" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.ResetPasswordActivity" android:theme="@style/Theme.TalkMate.Pink" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.HomeActivity" android:theme="@style/Theme.TalkMate.PinkFull" />
+        <activity android:name=".ui.ProfileActivity" />
+        <activity android:name=".ui.TrainingsActivity" />
+        <activity android:name=".ui.RecordActivity" />
+        <activity android:name=".ui.ResultsActivity" />
+        <activity android:name=".ui.ArticlesActivity" />
+        <activity android:name=".ui.ArticleActivity" />
+        <activity android:name=".ui.StatsActivity" />
+        <activity android:name=".ui.ErrorActivity" android:theme="@style/Theme.TalkMate.Pink" />
+    </application>
+</manifest>

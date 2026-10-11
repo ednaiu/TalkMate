@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Иллюстрация первого экрана: микрофон с лицом на розовом пятне и звуковая волна. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="360dp" android:height="240dp" android:viewportWidth="360" android:viewportHeight="240">
+    <path android:fillColor="#FCE4EC" android:pathData="M40,140 C36,70 110,20 190,6 C250,-4 290,30 300,70 C308,100 330,120 328,160 C326,215 270,232 200,232 C120,232 46,215 40,140 Z" />
+    <path android:fillColor="#00000000" android:strokeColor="#111111" android:strokeWidth="7" android:strokeLineCap="round" android:pathData="M110,118 C108,160 122,190 149,190 C176,190 192,172 197,146 M149,190 L149,218" />
+    <path android:fillColor="#111111" android:pathData="M116,221 C116,212 182,212 182,221 C182,230 116,230 116,221 Z" />
+    <group android:pivotX="162" android:pivotY="108" android:rotation="14">
+        <path android:fillColor="#8C9EF2" android:pathData="M126,76 a36,36 0 0 1 72,0 L198,140 a36,36 0 0 1 -72,0 Z" />
+        <path android:fillColor="#FFFFFF" android:pathData="M162,46 a30,30 0 1 0 0.01,0 Z" />
+        <path android:fillColor="#111111" android:pathData="M150,69 a3.2,3.2 0 1 0 0.01,0 Z M174,69 a3.2,3.2 0 1 0 0.01,0 Z" />
+        <path android:fillColor="#7CC47A" android:pathData="M157,77 L167,77 L162,86 Z" />
+        <path android:fillColor="#00000000" android:strokeColor="#5B6FD6" android:strokeWidth="6" android:strokeLineCap="round" android:pathData="M146,120 L174,120 M146,132 L174,132 M146,144 L174,144" />
+    </group>
+    <path android:fillColor="#00000000" android:strokeColor="#111111" android:strokeWidth="11" android:strokeLineCap="round" android:pathData="M110,118 L111,108 M197,146 L199,137" />
+    <path android:fillColor="#00000000" android:strokeColor="#8C9EF2" android:strokeWidth="7" android:strokeLineCap="round" android:pathData="M220,131 L220,131.1 M233,119 L233,143 M246,109 L246,153 M260,99 L260,163 M274,111 L274,151 M287,122 L287,140 M301,131 L301,131.1" />
+</vector>

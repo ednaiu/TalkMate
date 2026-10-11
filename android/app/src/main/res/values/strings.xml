@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Основной язык ресурсов английский: его видят все, у кого телефон не на русском. Русские строки лежат в values-ru. -->
+    <string name="app_name">TalkMate</string>
+    <string name="talk" translatable="false">Talk</string>
+    <string name="mate" translatable="false">Mate</string>
+    <string name="login_caps" translatable="false">LOGIN</string>
+    <string name="sign_up" translatable="false">Sing Up</string>
+    <string name="welcome_subtitle">Practice your speech and get ready\nfor public speaking</string>
+    <string name="create_account">Create account</string>
+    <string name="have_account">Already have an account?</string>
+    <string name="log_in">Log in</string>
+    <string name="sign_up_caps" translatable="false">Sing UP</string>
+    <string name="brand_name" translatable="false">Talk Mate</string>
+    <string name="login_title">Welcome back!</string>
+    <string name="login_subtitle">Log in to continue practicing</string>
+    <string name="signup_subtitle">Keep your practice results</string>
+    <string name="no_account">No account yet?</string>
+    <string name="label_name">Name</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="label_phone">Phone</string>
+    <string name="label_birth">Date of birth</string>
+    <string name="label_gender">Gender</string>
+    <string name="hint_name_ask">What should we call you</string>
+    <string name="hint_email_example" translatable="false">name@example.com</string>
+    <string name="hint_password_enter">Enter your password</string>
+    <string name="hint_password_new">Create a password</string>
+    <string name="hint_phone_example" translatable="false">+7 …</string>
+    <string name="hint_birth_format">DD.MM.YYYY</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_male">Male</string>
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="pick_date">Pick a date</string>
+    <string name="brand" translatable="false">speakspeak</string>
+    <string name="stats" translatable="false">Stats</string>
+    <string name="ooops" translatable="false">Ooops…</string>
+    <string name="hello_login">Hello!\nGood to see you\nagain</string>
+    <string name="hello_signup">Hello!\nLet us get acquainted</string>
+    <string name="hint_name" translatable="false">Username</string>
+    <string name="hint_email" translatable="false">Email</string>
+    <string name="hint_password" translatable="false">Password</string>
+    <string name="hint_phone" translatable="false">Phone</string>
+    <string name="hint_birth" translatable="false">Date of Birth</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="welcome_user">Hello, %1$s!</string>
+    <string name="home_caption">SPEECH PRACTICE</string>
+    <string name="home_title">Speak with\nconfidence</string>
+    <string name="training">Practice</string>
+    <string name="training_hint">Record a talk and learn how to improve your speech</string>
+    <string name="start_training">Start practice  →</string>
+    <string name="articles_hint">Tips on public speaking</string>
+    <string name="progress">My progress</string>
+    <string name="progress_hint">Practice results</string>
+    <string name="articles">Articles</string>
+    <string name="articles_caps">ARTICLES</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Log out</string>
+    <string name="close">Close</string>
+    <string name="server">Server address</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="record_title">RECORDING</string>
+    <string name="analyze">Analyze</string>
+    <string name="record_start">Start recording</string>
+    <string name="record_pause">Pause</string>
+    <string name="record_resume">Resume recording</string>
+    <string name="record_stop">Stop recording</string>
+    <string name="hint_idle">Tap the record button and start speaking</string>
+    <string name="hint_recording">Recording</string>
+    <string name="hint_paused">Recording paused</string>
+    <string name="hint_stopped">The recording is ready. Tap Analyze</string>
+    <string name="hint_analyzing">Analyzing the recording. This may take about a minute</string>
+    <string name="hint_too_short">The recording is too short. Speak for at least three seconds</string>
+    <string name="hint_no_permission">Recording is impossible without microphone access. Allow it in the app settings</string>
+    <string name="hint_mic_failed">Could not turn on the microphone</string>
+    <string name="attach_slides">Attach slides (PDF)</string>
+    <string name="slides_attached">Slides: %1$s</string>
+    <string name="remove_slides">Remove slides</string>
+    <string name="slides_failed">Could not open the file. Choose a presentation in PDF format</string>
+    <string name="slides_too_big">The file is larger than 40 MB. Compress the presentation and attach it again</string>
+    <string name="slides_title">Slides and speech</string>
+    <string name="slides_summary">Slides: %1$d. You covered %2$s of what is written on them and read %3$d%% of your speech off the slides</string>
+    <string name="slides_timed">Time per slide comes from your own slide changes.</string>
+    <string name="slides_guessed">Time per slide is estimated from the words. To make it exact, flip the slides in the app while recording.</string>
+    <string name="slide_number">Slide %1$d of %2$d</string>
+    <string name="slide_prev">‹ Back</string>
+    <string name="slide_next">Next ›</string>
+    <string name="slide_preview">Current slide</string>
+    <string name="slides_missed">Not said: %1$s</string>
+    <string name="record_again">Record again</string>
+    <string name="results">Results</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="row_rate">Pace</string>
+    <string name="row_volume">Volume</string>
+    <string name="row_monotony">Intonation</string>
+    <string name="row_emotion">Emotion</string>
+    <string name="row_clarity">Clarity</string>
+    <string name="row_fillers">Filler\nwords</string>
+    <string name="main_idea_title">Main idea</string>
+    <string name="main_idea_missing">Could not find one: the recording has too few words</string>
+    <string name="keywords">Key words: %1$s</string>
+    <string name="structure_title">Structure</string>
+    <string name="transcript_show">Show transcript</string>
+    <string name="transcript_legend">Filler words are highlighted in pink, words that were hard to make out are underlined. A note above a phrase tells you when the pace is off, the speech is unclear or the voice carries an emotion.</string>
+    <string name="transcript_hide">Hide transcript</string>
+    <string name="fillers_found">Most frequent: %1$s</string>
+    <string name="stats_empty">Charts will appear here once you record your first talk in Practice</string>
+    <string name="chart_rate">Pace (words per minute)</string>
+    <string name="chart_fillers">Number of filler words</string>
+    <string name="chart_volume">Volume, dB</string>
+    <string name="chart_pitch">Liveliness of intonation</string>
+    <string name="chart_clarity">Clarity, %</string>
+    <string name="note_clarity">The higher, the clearer the speech. Below the dashed line (%1$s) it sounds unclear</string>
+    <string name="note_range">Norm: from %1$s to %2$s, between the dashed lines</string>
+    <string name="note_max">Norm: no more than %1$s, below the dashed line</string>
+    <string name="note_pitch">The higher, the more expressive the voice. Below the dashed line (%1$s) the speech sounds monotone</string>
+    <string name="chart_last">latest: %1$s</string>
+    <string name="back">Back</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="hello_reset">Forgot your password?\nLet us restore it</string>
+    <string name="reset_title" translatable="false">Password</string>
+    <string name="hint_code">Code from the email</string>
+    <string name="hint_new_password">New password</string>
+    <string name="send_code">Get the code</string>
+    <string name="send_code_again">Send the code again</string>
+    <string name="change_password">Change password</string>
+    <string name="code_sent">If %1$s is registered, we have sent it an email with a six-digit code. The code is valid for 15 minutes.</string>
+    <string name="retry">Try again</string>
+    <string name="error_default">Something went wrong</string>
+    <string name="session_expired">Your session has expired, please log in again</string>
+    <string name="loading">Loading</string>
+    <string name="language_row">Language: %1$s</string>
+    <string name="language_title">Language</string>
+    <string name="language_system">System default</string>
+    <string name="language_ru" translatable="false">Русский</string>
+    <string name="language_en" translatable="false">English</string>
+    <string name="profile_progress">Your progress</string>
+    <string name="plan_basic">Basic plan</string>
+    <string name="tempo_title">Speech pace</string>
+    <string name="tempo_empty">The chart appears after your first session</string>
+    <string name="start_training_plain">Start practice</string>
+    <string name="recent_title">Recent sessions</string>
+    <string name="all">All</string>
+    <string name="recent_empty">No sessions yet</string>
+    <string name="plans_title">More ways\nto practice</string>
+    <string name="plans_link">See plans ›</string>
+    <string name="plans_message">Only the basic plan exists for now: every feature of the app is free.</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_trainings">Sessions</string>
+    <string name="settings">Settings</string>
+</resources>
