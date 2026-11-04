@@ -43,7 +43,7 @@
             android:id="@+id/tvOoops"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/yeseva_one"
+            android:fontFamily="sans-serif-medium"
             android:text="@string/ooops"
             android:textColor="@color/ink"
             android:textSize="46sp" />
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="sans-serif"
             android:lineSpacingExtra="5dp"
             android:textColor="@color/grey_title"
             android:textSize="18sp" />

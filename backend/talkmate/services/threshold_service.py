@@ -29,6 +29,8 @@ class ThresholdService:
             raise ApiError(400, "invalid_threshold", "Нижняя граница темпа должна быть меньше верхней")
         if not 0 <= values["clarity_unclear"] < values["clarity_clear"] <= 100:
             raise ApiError(400, "invalid_threshold", "Пороги чёткости: от 0 до 100, нижний меньше верхнего")
+        if not 0 <= values["noise_snr_min_db"] <= 60:
+            raise ApiError(400, "invalid_threshold", "Порог шума: от 0 до 60 дБ")
         if values["monotony_min_semitones"] < 0 or values["fillers_max"] < 0 or values["rate_slow"] <= 0:
             raise ApiError(400, "invalid_threshold", "Порог не может быть отрицательным")
         for key in data:

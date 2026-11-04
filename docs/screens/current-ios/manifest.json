@@ -1,0 +1,240 @@
+{
+  "date": "2026-11-04",
+  "platform": "iOS 27.0",
+  "device": "iPhone 17 Simulator",
+  "language": "ru",
+  "appearance": "light",
+  "text_size": "standard",
+  "data": "FakeApi / FakeRecorder; synthetic PDF. No user account or real speech analysis.",
+  "screenshots": [
+    {
+      "file": "01_onboarding_1.png",
+      "title": "Онбординг: начало",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "02_onboarding_2.png",
+      "title": "Онбординг: слайды",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "03_onboarding_3.png",
+      "title": "Онбординг: разбор",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "04_terms_draft.png",
+      "title": "Условия: проект",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "05_privacy_draft.png",
+      "title": "Конфиденциальность: проект",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "06_signup_top.png",
+      "title": "Регистрация: верх",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "07_signup_bottom.png",
+      "title": "Регистрация: низ",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "08_login.png",
+      "title": "Вход",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "09_recovery_email.png",
+      "title": "Восстановление: email",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "10_recovery_code.png",
+      "title": "Восстановление: код",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "11_home.png",
+      "title": "Главная",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "12_profile_top.png",
+      "title": "Профиль: верх",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "13_profile_bottom.png",
+      "title": "Профиль: низ",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "14_settings_top.png",
+      "title": "Настройки: верх",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "15_settings_bottom.png",
+      "title": "Настройки: низ",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "16_trainings.png",
+      "title": "Тренировки",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "17_articles.png",
+      "title": "Статьи",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "18_article_1.png",
+      "title": "Статья: жесты",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "19_article_2.png",
+      "title": "Статья: площадка",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "20_article_3.png",
+      "title": "Статья: презентация",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "21_article_4.png",
+      "title": "Статья: разогрев",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "22_stats_top.png",
+      "title": "Статистика: верх",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "23_stats_middle.png",
+      "title": "Статистика: середина",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "24_record_idle.png",
+      "title": "Запись: до старта",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "25_record_active.png",
+      "title": "Запись: активна",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "26_record_paused.png",
+      "title": "Запись: пауза",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "27_record_ready.png",
+      "title": "Запись: завершена",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "28_results_summary.png",
+      "title": "Разбор: итог",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "29_results_metrics.png",
+      "title": "Разбор: метрики",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "30_results_details.png",
+      "title": "Разбор: подробности",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "31_results_content.png",
+      "title": "Разбор: содержание",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "32_results_transcript.png",
+      "title": "Разбор: расшифровка",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "33_record_with_slides.png",
+      "title": "Запись с PDF",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "34_slide_viewer.png",
+      "title": "Просмотр PDF: второй слайд",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "35_results_slides.png",
+      "title": "Разбор презентации",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "36_stats_empty.png",
+      "title": "Статистика: пусто",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "37_connection_error.png",
+      "title": "Ошибка соединения",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "38_stats_bottom.png",
+      "title": "Статистика: низ",
+      "width": 1206,
+      "height": 2622
+    }
+  ],
+  "missing": []
+}

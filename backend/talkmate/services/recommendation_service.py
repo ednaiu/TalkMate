@@ -41,6 +41,11 @@ ADVICE = {
         "окончания и не глотайте слоги, а в расшифровке посмотрите, какие слова подчёркнуты. На оценку влияют "
         "и шум вокруг, и расстояние до микрофона."
     ),
+    "noisy": (
+        "**записаться в тихом месте**: вокруг шумно, речь громче фона всего на {snr:.0f} дБ. Из-за этого часть слов "
+        "распознана неуверенно, и оценки могли получиться строже, чем есть на самом деле. Закройте окно, отойдите от "
+        "кондиционера и держите телефон в 20–30 см от рта."
+    ),
     "emotion": (
         "**следить за настроением речи**: в голосе слышится {emotion}. Перед выступлением сделайте "
         "несколько медленных выдохов и начните с улыбки, тогда тон станет спокойнее."
@@ -86,6 +91,11 @@ ADVICE_EN = {
         "your word endings and do not swallow syllables, and check the transcript for the underlined words. Background noise "
         "and the distance to the microphone also affect this score."
     ),
+    "noisy": (
+        "**record in a quieter place**: there is background noise, your voice is only {snr:.0f} dB louder than it. Because "
+        "of that some words were recognised with low confidence, and the scores may be stricter than they should be. Close "
+        "the window, move away from the air conditioner and hold the phone 20–30 cm from your mouth."
+    ),
     "emotion": (
         "**watch the mood of your voice**: it carries {emotion}. Before the talk breathe out slowly "
         "a few times and start with a smile, the tone will become calmer."
@@ -115,7 +125,10 @@ def find_issues(result, thresholds):
         issues.append("no_intro")
     if structure.get("conclusion") is False:
         issues.append("no_conclusion")
-    if getattr(result, "clarity_level", None) == "unclear":
+    # В шумной записи низкая чёткость говорит об условиях, а не о дикции: советуем тишину вместо «говорить чётче».
+    if getattr(result, "noise_level", None) == "noisy":
+        issues.append("noisy")
+    elif getattr(result, "clarity_level", None) == "unclear":
         issues.append("unclear")
     if result.emotion in NEGATIVE_EMOTIONS:
         issues.append("emotion")
@@ -137,6 +150,7 @@ def build_recommendation(result, thresholds):
         "examples": ", ".join(quote.format(w) for w in (result.top_fillers or defaults)),
         "emotion": (NEGATIVE_EMOTIONS_EN if english else NEGATIVE_EMOTIONS).get(result.emotion, ""),
         "clarity": getattr(result, "clarity", None) or 0,
+        "snr": getattr(result, "snr_db", None) or 0,
     }
     if not issues:
         if english:

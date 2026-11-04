@@ -1,8 +1,9 @@
 from flask import Blueprint, current_app, g, jsonify, request
 
 from ..models import speech_to_dict
+from ..services.quality_service import QualityService
 from ..services.speech_service import SpeechService
-from .common import login_required
+from .common import json_body, login_required
 
 bp = Blueprint("speeches", __name__)
 
@@ -59,3 +60,25 @@ def recommendations():
 @login_required
 def stats():
     return jsonify(_service().stats(g.user))
+
+
+def _quality():
+    return QualityService(g.db, _service())
+
+
+@bp.get("/speeches/<int:speech_id>/ratings")
+@login_required
+def list_ratings(speech_id):
+    return jsonify([r.to_dict() for r in _quality().ratings(g.user, speech_id)])
+
+
+@bp.put("/speeches/<int:speech_id>/ratings/<metric>")
+@login_required
+def rate_metric(speech_id, metric):
+    return jsonify(_quality().rate(g.user, speech_id, metric, json_body()).to_dict())
+
+
+@bp.put("/consent")
+@login_required
+def set_consent():
+    return jsonify(_quality().set_consent(g.user, json_body()))

@@ -28,3 +28,7 @@ xcuserdata/
 # Рабочие материалы дизайна и сторонний плагин: в проект не входят
 output/
 taste-skill/
+
+# Browser automation artifacts and downloadable screenshot bundles
+.playwright-mcp/
+docs/screens/*.zip

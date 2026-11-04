@@ -1,206 +1,219 @@
-# TalkMate
+# Talk Mate
 
-Приложение для тренировки публичных выступлений. Пользователь записывает речь на телефон, сервер оценивает темп, громкость, монотонность, слова-заполнители и эмоциональную окраску, после чего приложение показывает оценки и рекомендации. Распознавание речи и модель эмоций работают на собственном сервере, внешних сервисов нет. Реализовано по презентации ВКР, которая лежит в корне репозитория.
+Talk Mate is a public speaking practice app for iPhone and Android. Record a rehearsal, optionally attach PDF slides, and review your pace, filler words, voice metrics, transcript and suggestions for the next attempt.
 
-## Состав
+Speech recognition and analysis run on a self-hosted Python backend. Audio is sent to that backend rather than a third-party speech API. Model weights are downloaded on first use. The project began as a bachelor's thesis prototype; the original presentation is included in the repository.
 
-| Каталог | Что внутри |
+## Screens and documentation
+
+- [English screen gallery](docs/screens/current-ios-en/index.html) and [screen list](docs/screens/current-ios-en/README.md)
+- [Russian screen gallery](docs/screens/current-ios/index.html) and [screen list](docs/screens/current-ios/README.md)
+- [Model evaluation and experiments](docs/MODELS.md) (Russian)
+- [User guide](docs/USER_GUIDE.md) (Russian)
+- [Repository structure and local artifacts](docs/REPOSITORY.md) (Russian)
+
+Each current screenshot set contains 38 screens and states captured in the iOS Simulator with demonstration data. These captures do not represent analysis of real user recordings. Legal documents shown in the app are drafts.
+
+## Repository
+
+| Directory | Contents |
 | --- | --- |
-| `android/` | Приложение для Android на Kotlin: экраны по макетам, диктофон WAV, клиент API |
-| `ios/` | Приложение для iPhone на SwiftUI: те же экраны и тот же сервер |
-| `backend/talkmate/` | Сервер приложения на Flask: API и страница администратора |
-| `backend/speech_analysis/` | Сервер анализа речи: алгоритмы на Python и модель эмоций |
-| `backend/training/` | Обучение модели эмоций на Dusha и RESD, замеры качества обеих моделей |
-| `docs/` | Инструкция пользователя, снимки экранов, отчёт о моделях [MODELS.md](docs/MODELS.md) |
+| `android/` | Kotlin app, WAV recorder and API client |
+| `ios/` | SwiftUI app, native audio recorder and API client |
+| `backend/talkmate/` | Flask application API and admin interface |
+| `backend/speech_analysis/` | Speech recognition, audio metrics, emotion and slide analysis |
+| `backend/training/` | Training, dataset preparation and model benchmarks |
+| `docs/` | Screenshots, model reports, design notes and user documentation |
 
-Схема базы повторяет слайд 8: `user`, `speech`, `feedback`, `article`, `recommendation`. Добавлена таблица `threshold` для порогов, которые меняет администратор, и несколько столбцов: роль и анкетные поля пользователя, длительность записи, числовые значения громкости и разброса тона для графиков.
+Datasets, downloaded models, uploads, the local database and Python environment are excluded from Git. Keep them when cleaning generated build files. Screenshot ZIP exports are written to the ignored `output/screens/` directory.
 
-## Архитектура
+## Architecture
 
-Серверная часть повторяет диаграмму компонентов со слайда 10. Узлов два, оба работают с одной базой MySQL.
+The backend has two services sharing a database:
 
-Сервер приложения (`backend/talkmate/`, порт 5050) разбит на слои:
+- **Application service, port 5050:** authentication, recordings, feedback, articles, recommendations, settings and administration.
+- **Analysis service, port 5051:** model inference and speech metrics through `POST /analyze`.
 
-- `controllers/` разбирают HTTP-запрос и проверяют права;
-- `services/` содержат правила: регистрация, сохранение записи, рекомендации, пороги;
-- `repositories.py` выполняет все запросы к таблицам;
-- `models.py` описывает таблицы;
-- `data_connector.py` подключается к базе и выдаёт сессии.
+The application service separates HTTP controllers, business services, repositories, SQLAlchemy models and database connections. Core tables include `user`, `speech`, `feedback`, `article`, `recommendation` and `threshold`. Administrators can adjust analysis thresholds without changing the application code.
 
-Сервер анализа речи (`backend/speech_analysis/`, порт 5051) принимает запись по `POST /analyze` и возвращает показатели. Модели распознавания и эмоций загружены только в нём. Пороги он читает из базы сам, поэтому правка администратора действует на следующую же запись. Наружу этот сервер не публикуется: по умолчанию он слушает 127.0.0.1, а при разнесении по машинам закрывается общим `ANALYSIS_TOKEN`.
+The analysis service binds to `127.0.0.1` by default. If deployed on a separate machine, configure its address and a shared `ANALYSIS_TOKEN`; it is intended for internal access. Both services support MySQL, with a shared SQLite file as the local fallback.
 
-## Запуск сервера
+## Run the backend
 
-Нужны Python 3.12, Docker для MySQL и ffmpeg, если будут приходить записи не в WAV.
+Requirements: Python 3.12, Docker for the supplied MySQL setup, and ffmpeg for audio formats other than WAV.
 
 ```sh
 cd backend
 python3.12 -m venv .venv
 .venv/bin/pip install -r requirements.txt
-.venv/bin/pip install -r requirements-ml.txt   # модель эмоций и офлайн-распознавание
-docker compose up -d                           # MySQL на 127.0.0.1:3307
-cp .env.example .env                           # поправьте SECRET_KEY и пароль администратора
-./run.sh                                       # сервер анализа на 5051 и сервер приложения на 5050
+.venv/bin/pip install -r requirements-ml.txt
+cp .env.example .env
+# Edit .env: replace SECRET_KEY and the default admin credentials.
+docker compose up -d
+./run.sh
 ```
 
-Без `DATABASE_URL` оба сервера работают на общем файле SQLite, этого хватает для пробного запуска. С `ANALYSIS_INPROCESS=1` скрипт поднимает один процесс, и анализ выполняется внутри сервера приложения.
+MySQL is exposed locally on port `3307`. The environment file selects it through `DATABASE_URL`. If `DATABASE_URL` is unset, both services use the SQLite fallback. `ANALYSIS_INPROCESS=1` runs analysis inside the application service instead of starting a separate process.
 
-### Распознавание речи
+### Speech recognition
 
-Модель GigaAM-v3 (`ai-sage/GigaAM-v3`, вариант e2e CTC) с Hugging Face. Она скачивается при первом запросе, около 900 МБ, и работает на процессоре: секунда звука разбирается за 0,03 секунды. Модель выбрана замером восьми кандидатов, таблица в [docs/MODELS.md](docs/MODELS.md).
+Russian speech uses **GigaAM-v3 e2e CTC**, selected after a project benchmark of eight candidates. English speech uses **Parakeet TDT 0.6b v3**. The server detects the speech language and applies the corresponding recognizer, filler vocabulary and pace thresholds. Long recordings are split at pauses into chunks of up to 25 seconds.
 
-Режим задаёт переменная `RECOGNIZER`:
+`RECOGNIZER` selects the recognition mode:
 
-- `auto` (по умолчанию): модель из `ASR_MODEL`, а если пакет `onnx-asr` не установлен или модель не загрузилась, запасная Vosk;
-- `onnx`: только модель из `ASR_MODEL`. Имя можно сменить на любое из поддерживаемых `onnx-asr`, например `gigaam-v3-rnnt`;
-- `vosk`: лёгкая офлайн-модель. Скачайте [vosk-model-small-ru-0.22](https://alphacephei.com/vosk/models) и распакуйте в `backend/models/`. Ошибок в словах у неё вчетверо больше.
+| Value | Behavior |
+| --- | --- |
+| `auto` (default) | Use `ASR_MODEL` through `onnx-asr`; fall back to Vosk if the package or model is unavailable |
+| `onnx` | Use only the model selected by `ASR_MODEL` |
+| `vosk` | Use a local Vosk model |
 
-Длинная запись режется на куски до 25 секунд по паузам.
+The default `ASR_MODEL` is `gigaam-v3-e2e-ctc`. For the Russian Vosk fallback, download [vosk-model-small-ru-0.22](https://alphacephei.com/vosk/models) and extract it under `backend/models/`.
 
-### Эмоциональная окраска
+The Russian ONNX model download is approximately 900 MB. The project measured roughly 0.03 seconds of processing per second of audio on its benchmark CPU. This is a local measurement, not a latency guarantee. Dataset details, word error rates and filler retention results are in [MODELS.md](docs/MODELS.md).
 
-По умолчанию (`EMOTION_BACKEND=talkmate`) работает кодировщик `Aniemore/wavlm-emotion-russian-resd` с головой, дообученной на Dusha и RESD. Веса головы лежат в репозитории (`backend/speech_analysis/weights/emotion_head.pt`, 2,5 МБ), кодировщик скачивается с Hugging Face при первом запросе, около 1,2 ГБ. На живой речи точность выросла с 16,5% до 78,2%, подробности в [docs/MODELS.md](docs/MODELS.md).
+### Emotion model
 
-`EMOTION_BACKEND=aniemore` включает исходную модель без изменений, `off` отключает определение эмоций. Если модель не загрузилась, остальные оценки считаются как обычно, а в строке «Эмоция речи» приложение пишет «не определена».
+`EMOTION_BACKEND=talkmate` uses the `Aniemore/wavlm-emotion-russian-resd` encoder with a custom classification head trained on Dusha and RESD. The head is included at `backend/speech_analysis/weights/emotion_head.pt`; the encoder is downloaded on first use, approximately 1.2 GB.
 
-### Администратор
+The project evaluation reported an accuracy increase from 16.5% to 78.2% on its spontaneous-speech evaluation set. See [the evaluation report](docs/MODELS.md) for the method and scope. An emotion label is a model estimate from voice characteristics, not a reliable statement about the speaker's feelings.
 
-Страница `http://localhost:5050/admin`, учётная запись берётся из `ADMIN_EMAIL` и `ADMIN_PASSWORD` при первом запуске. Доступны функции из диаграммы вариантов использования: добавление и редактирование статей, пороговые значения, имя и email пользователей.
+Set `EMOTION_BACKEND=aniemore` to use the original model or `off` to disable emotion inference. If loading fails, other metrics remain available and the emotion result is marked as undetermined.
 
-### Обучение модели
+### Administration and password recovery
 
-Инструменты те же, что на слайде 13: PyTorch, предобученные веса Aniemore, перекрёстная энтропия, Adam, F1-мера после каждой эпохи. Скриптов два.
+Open `http://localhost:5050/admin`. The initial account is created from `ADMIN_EMAIL` and `ADMIN_PASSWORD`. The admin interface supports articles, analysis thresholds and user details.
 
-`training/train_head.py` обучает голову на признаках замороженного кодировщика. Признаки считаются один раз (`training/extract_features.py`), после этого обучение идёт около минуты. Этим способом получены веса в репозитории.
+Password recovery sends a six-digit code by email. Codes expire after 15 minutes, are stored as hashes and stop working after five failed attempts. A new request is allowed after one minute. The response does not reveal whether an email address is registered.
 
-`training/train_emotion.py` размораживает верхние слои кодировщика. Это тяжёлый вариант для видеокарты с CUDA:
+Configure `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` and `SMTP_FROM` in `.env`. When `SMTP_HOST` is empty, the server logs the recovery code instead of sending email. This fallback is for local development.
 
-```sh
-.venv/bin/python -m training.train_emotion \
-    --dusha "data/dusha/data/train-*.parquet" --resd "data/resd/data/train-*.parquet" \
-    --test-dusha "data/dusha/data/test-*.parquet" --test-resd "data/resd/data/test-*.parquet" \
-    --unfreeze-layers 4 --epochs 8 --output models/wavlm-emotion-dusha
-```
+## Build for iPhone
 
-Обучать нужно на Dusha и RESD вместе. В Dusha четыре эмоции, и без RESD модель перестаёт узнавать страх, отвращение и интерес. Порядок воспроизведения всех экспериментов описан в [docs/MODELS.md](docs/MODELS.md).
-
-### Восстановление пароля
-
-На экране входа есть ссылка «Забыли пароль?». Сервер отправляет на почту код из шести цифр, приложение принимает код и новый пароль. Код действует 15 минут, хранится в виде хеша, после пяти неверных попыток перестаёт приниматься, повторный запрос возможен через минуту. Ответ сервера одинаков для зарегистрированного и незарегистрированного адреса.
-
-Письма уходят через SMTP: задайте `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` и `SMTP_FROM` в `.env`. Пока `SMTP_HOST` пуст, письмо не отправляется, а код пишется в журнал сервера строкой «SMTP не настроен. Код восстановления для …». Это режим разработки: для настоящих пользователей почту нужно настроить.
-
-## Сборка приложения для iPhone
-
-Нужны Xcode 26 и [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`). Файл проекта в репозитории не хранится, он создаётся из `ios/project.yml`.
+Use Xcode with the iOS SDK and [XcodeGen](https://github.com/yonaskolb/XcodeGen). The deployment target is iOS 17.0. The Xcode project is generated from `ios/project.yml` and is not tracked in Git.
 
 ```sh
+brew install xcodegen
 cd ios
 xcodegen generate
-open TalkMate.xcodeproj        # дальше Run в Xcode на симуляторе или телефоне
+open TalkMate.xcodeproj
 ```
 
-В симуляторе приложение ходит на `http://localhost:5050`, то есть на сервер на этом же компьютере.
+Run the app from Xcode. The Simulator connects to `http://localhost:5050`, which points to the backend on the same Mac.
 
-### Установка на свой iPhone
+### Install on a physical iPhone
 
-Готового файла, который можно просто скопировать на телефон, для iOS не существует: система запускает только приложения, подписанные учётной записью Apple. Подпись делается на этом Mac за три шага, платная подписка разработчика не нужна.
-
-1. Xcode → Settings → Accounts → «+» → войти со своим Apple ID.
-2. На iPhone: Настройки → Конфиденциальность и безопасность → Режим разработчика → включить. Телефон перезагрузится.
-3. Подключить iPhone кабелем, разблокировать, ответить «Доверять» и запустить:
+1. Add your Apple ID in Xcode under **Settings > Accounts**.
+2. Enable **Developer Mode** under **Settings > Privacy & Security** on the iPhone.
+3. Connect and unlock the phone, trust the Mac, then run:
 
 ```sh
 cd ios
 ./install_on_iphone.sh
 ```
 
-Скрипт сам находит учётную запись и телефон, собирает приложение, подписывает его, ставит и запускает. В сборку он вписывает адрес этого Mac в локальной сети, поэтому телефон должен быть в той же сети Wi-Fi, а сервер (`backend/run.sh`) запущен. Адрес можно сменить и в приложении: долгое нажатие на логотип на первом экране либо «Адрес сервера» в профиле.
+The script finds the signing account and device, builds, signs, installs and launches the app. It uses the Mac's LAN address for the backend. Keep both devices on the same network and run `backend/run.sh`. You can change the server address in the app's profile settings.
 
-При первом запуске iPhone попросит доверять разработчику: Настройки → Основные → VPN и управление устройством. С бесплатной учётной записью приложение работает семь дней, потом скрипт нужно запустить ещё раз.
+If prompted, trust the developer under **Settings > General > VPN & Device Management**. A free Apple development account generally requires reinstalling the signed build after seven days.
 
-Отличия от Android-версии: токен хранится в связке ключей, звук пишет системный `AVAudioRecorder`, графика нарисована теми же контурами. Экраны, тексты и идентификаторы элементов совпадают.
+The iOS app stores authentication tokens in Keychain and records audio with `AVAudioRecorder`. Interface text uses the system font with Dynamic Type; the wordmark uses Manrope at weight 650.
 
-## Сборка приложения для Android
+## Build for Android
 
-Нужны Android Studio или JDK 17+ и Android SDK 34.
+Requirements: Android Studio, or JDK 17+ with Android SDK 34.
 
 ```sh
 cd android
-./gradlew assembleDebug        # app/build/outputs/apk/debug/app-debug.apk
+./gradlew assembleDebug
+# APK: app/build/outputs/apk/debug/app-debug.apk
 ```
 
-По умолчанию приложение ходит на `http://10.0.2.2:5050`, это адрес компьютера из эмулятора. Для телефона адрес задаётся при сборке (`-PapiBaseUrl=http://192.168.1.10:5050`) или в самом приложении: долгое нажатие на логотип на первом экране либо «Адрес сервера» в профиле.
+The emulator connects to `http://10.0.2.2:5050`. For a physical device, supply the backend's LAN address when building:
 
-## Алгоритмы
+```sh
+./gradlew assembleDebug -PapiBaseUrl=http://192.168.1.10:5050
+```
 
-Код лежит в `backend/speech_analysis/`, по файлу на показатель.
+The address can also be changed in profile settings. Android uses system text fonts and retains Yeseva One and Poiret One for decorative wordmark elements. Font licenses are included with the platform resources. Both apps use the same backend, though their layouts can differ.
 
-- **Скорость.** Число распознанных слов делится на длительность записи в минутах. Числа, которые модель записала цифрами, считаются по числу произнесённых слов. Норма 90–140 слов в минуту: она выведена из справочных данных о темпе русской речи и собственных замеров, обоснование в [docs/MODELS.md](docs/MODELS.md). На слайде 16 стояло 120–180.
-- **Громкость.** Средняя амплитуда (RMS, librosa) по участкам с речью, в dBFS. Ниже −30 «тихая», выше −12 «громкая».
-- **Монотонность.** Запись делится на сегменты по полсекунды, для каждого берётся медиана основной частоты (`librosa.yin`), метрика равна стандартному отклонению тона сегментов в полутонах. Ниже 2 полутонов речь считается монотонной.
-- **Заполнители.** В распознанном тексте ищутся слова и словосочетания из списка («ну», «вот», «как бы», «короче» и другие), звуки-паузы («э-э», «эм», «м-м») и протянутые гласные («и-и-и»). Слова вроде «так» и «да» считаются, только когда выделены знаками препинания: «Так. Начнём» засчитывается, «так вышло» нет.
-- **Чёткость.** Оценка разборчивости по уверенности модели распознавания: общая, по фразам и по отдельным словам (`speech_analysis/clarity.py`). На 444 записях уверенность связана с долей ошибок распознавания (корреляция 0,67 по модулю). Шум и плохой микрофон оценку тоже снижают.
-- **Два языка.** Интерфейс приложений и ответы сервера есть на русском и английском, язык выбирается в профиле или берётся из настроек телефона. Язык речи сервер определяет сам: русскую распознаёт GigaAM-v3, английскую Parakeet TDT 0.6b v3, у каждого языка свои заполнители и норма темпа (`speech_analysis/lang.py`, подробности в `docs/MODELS.md`).
-- **Презентация и речь.** К записи можно приложить PDF со слайдами. Текст слайдов читается из текстового слоя и моделью распознавания текста PP-OCRv5 (`speech_analysis/slides.py`), затем фразы речи привязываются к слайдам (`speech_analysis/slide_match.py`): по отметкам о переключении слайдов, если их листали в приложении, иначе по общим словам и смысловым векторам модели `multilingual-e5-small`. На четырёх настоящих докладах привязка без отметок ставит на верный слайд 94% времени речи. В ответе по каждому слайду: время, доля раскрытого словами, доля зачитанного, перегруженность текстом и мелкий шрифт. Метод, проверка и ограничения описаны в `docs/MODELS.md`.
-- **Основная мысль и структура.** Считаются локально по расшифровке. Основную мысль одной фразой пересказывает модель `cointegrated/rut5-base-absum` (`speech_analysis/summarizer.py`), она скачивается при первом разборе и занимает около 900 МБ. Если модель недоступна или выдала пустой ответ, берётся самая содержательная фраза из сказанного (`speech_analysis/content.py`); этот же режим включается переменной `MAIN_IDEA_BACKEND=extractive`. Структура оценивается по трём признакам: вступление в начале, логические связки, заключение в конце. Записи короче 40 слов не оцениваются.
-- **Разметка по фразам.** Модель распознавания сообщает время каждого слова. Текст режется на фразы по предложениям, короткие склеиваются до трёх секунд. Для каждой фразы считается свой темп и своя эмоциональная окраска (`speech_analysis/segments.py`).
-- **Эмоция.** Ресемплинг до 16 кГц, нормализация амплитуды, сегментация на окна по 8 секунд, признаки всех слоёв WavLM, классификация обученной головой. Вероятности по окнам усредняются. Отрицательная эмоция выбирается, только если модель уверена в ней не меньше чем на 0,6. Удаление шума со схемы слайда 12 выключено: замер показал, что оно снижает точность.
+## Analysis methods
 
-Пороги громкости и микрофоны телефонов сильно различаются, поэтому значения по умолчанию стоит подстроить на странице администратора после первых записей с реального устройства.
+Implementation lives in `backend/speech_analysis/`.
 
-## Тесты
+| Metric or feature | Method and limitations |
+| --- | --- |
+| Pace | Recognized word count divided by recording duration in minutes. Language-specific reference ranges are configurable; the Russian default is 90-140 words per minute. These ranges are practice guides, not universal speaking standards. |
+| Volume | RMS amplitude over speech regions, expressed in dBFS. Default boundaries are -30 dBFS for quiet speech and -12 dBFS for loud speech. Microphone gain and distance affect the result. |
+| Pitch variation | Standard deviation in semitones of median pitch across half-second segments, using `librosa.yin`. Below 2 semitones is classified as monotonous. |
+| Filler words | Language-specific words, phrases, hesitation sounds and prolonged vowels. Ambiguous words are counted only in specified punctuation contexts. Recognition errors can omit fillers. |
+| Background noise | SNR estimate from the 90th and 10th percentiles of loudness in 64 ms frames. Below the configurable 15 dB default, feedback prioritizes recording conditions. The estimate is unavailable when there is insufficient loudness variation. |
+| Clarity | Recognition confidence at recording, phrase and word level. It is affected by noise and microphone quality as well as speech. On 444 evaluation recordings, confidence had an absolute correlation of 0.67 with recognition error rate. |
+| Emotion | WavLM features and a trained classification head over 8-second windows at 16 kHz. Window probabilities are averaged. Confidence thresholds reduce uncertain negative labels. Denoising is disabled because it reduced accuracy in the project evaluation. |
+| Main idea | Local `cointegrated/rut5-base-absum` summarization, with an extractive fallback. The model download is approximately 900 MB. Set `MAIN_IDEA_BACKEND=extractive` to use the fallback directly. Short or fragmented transcripts may produce poor summaries. |
+| Structure | Heuristics for an opening, transitions and a conclusion. Recordings with fewer than 40 words are not assessed. |
+| Phrase review | Word timestamps are grouped into phrases, with phrase-level pace and emotion estimates. Short phrases are combined into spans of at least three seconds. |
+| PDF slides | Text extraction and PP-OCRv5 OCR, followed by matching speech to slide text. Recorded slide changes take priority; otherwise matching uses lexical overlap and `multilingual-e5-small` embeddings. Results include time per slide, content coverage, read-aloud share, text density and small-font warnings. |
+
+Without slide-change markers, the slide matcher assigned 94% of speaking time to the correct slide across four recorded talks in the project evaluation. This small evaluation does not establish performance on arbitrary presentations. Methods, datasets and limitations are documented in [MODELS.md](docs/MODELS.md).
+
+## Training and evaluation
+
+`training/extract_features.py` computes frozen encoder features once. `training/train_head.py` trains a classification head on those features; this produced the bundled weights.
+
+`training/train_emotion.py` also supports unfreezing the encoder's upper layers for CUDA training:
 
 ```sh
 cd backend
-.venv/bin/python -m pytest             # 214 тестов: алгоритмы, API, права доступа, восстановление пароля, связка двух серверов, обучение головы, метрики
-.venv/bin/python -m pytest -m real     # 8 тестов на настоящих моделях: GigaAM, Vosk, модель эмоций, цикл дообучения
-TEST_DATABASE_URL='mysql+pymysql://talkmate:talkmate@127.0.0.1:3307/talkmate' .venv/bin/python -m pytest tests/test_api.py tests/test_admin.py
-
-cd ../android
-./gradlew testDebugUnitTest            # 35 модульных тестов
-./gradlew connectedDebugAndroidTest    # 52 сценария Espresso и проверка диктофона, нужен эмулятор или телефон
-
-cd ../ios
-xcodebuild -project TalkMate.xcodeproj -scheme TalkMate -destination 'platform=iOS Simulator,name=iPhone 17' test    # 25 модульных тестов и 40 сценариев XCUITest
+.venv/bin/python -m training.train_emotion \
+    --dusha "data/dusha/data/train-*.parquet" --resd "data/resd/data/train-*.parquet" \
+    --test-dusha "data/dusha/data/test-*.parquet" --test-resd "data/resd/data/test-*.parquet" \
+    --unfreeze-layers 4 --epochs 8 --output models/wavlm-emotion-dusha
 ```
 
-Сценарии Espresso работают с сервером в памяти (`FakeApi`) и не требуют сети. Сквозная проверка на живом сервере запускается отдельно, при запущенном `./run.sh`:
+Train on Dusha and RESD together. Dusha contains four emotion classes; RESD supplies examples needed to retain fear, disgust and interest. Reproduction instructions and experiment results are in [MODELS.md](docs/MODELS.md).
+
+### Feedback from app recordings
+
+- `PUT /api/speeches/<id>/ratings/<metric>` accepts `{"verdict": "correct" | "wrong", "comment": "..."}`. Supported metrics include pace, volume, monotony, fillers, clarity, noise, emotion, main idea, structure, slides, transcript and overall review. `GET /api/speeches/<id>/ratings` returns the recording's ratings. Administrators can inspect `GET /api/admin/ratings/summary`.
+- `PUT /api/consent` accepts `{"share_recordings": true}` to opt into using recordings for model improvement, or `false` to withdraw. Consent timestamps are stored. The consent wording and draft legal documents still require review before public release.
+- `python -m training.export_dataset --out data/own_testset_draft` exports recordings from consenting users with draft model transcripts. Annotators must correct `.txt` files verbatim, retaining fillers and repetitions. Optional `.json` labels can include `{"pace": "slow|ok|fast", "noisy": false}`.
+- `python -m training.own_testset --data data/own_testset` evaluates word error rate, filler and hesitation recall, pace error, and agreement with human pace/noise labels. Results are saved to `training/results/own_testset.json`.
+
+## Tests
+
+Run the suites appropriate to the component you change. Tests marked `real` require actual model dependencies and weights; device tests require a running simulator or connected device. Test counts are omitted because the suites are still growing.
 
 ```sh
+cd backend
+.venv/bin/python -m pytest
+.venv/bin/python -m pytest -m real
+TEST_DATABASE_URL='mysql+pymysql://talkmate:talkmate@127.0.0.1:3307/talkmate' \
+    .venv/bin/python -m pytest tests/test_api.py tests/test_admin.py
+
+cd ../android
+./gradlew testDebugUnitTest
+./gradlew connectedDebugAndroidTest
+
+cd ../ios
+xcodegen generate
+xcodebuild -project TalkMate.xcodeproj -scheme TalkMate \
+    -destination 'platform=iOS Simulator,name=iPhone 17' test
+```
+
+Replace the Simulator name with one installed on your Mac. UI scenarios use `FakeApi` for repeatable data without a live backend. The Android real-server test runs separately with `backend/run.sh` active:
+
+```sh
+cd android
 ./gradlew installDebug installDebugAndroidTest
-adb shell am instrument -w -e class ru.itmo.talkmate.RealServerTest -e serverUrl http://10.0.2.2:5050 \
+adb shell am instrument -w -e class ru.itmo.talkmate.RealServerTest \
+    -e serverUrl http://10.0.2.2:5050 \
     ru.itmo.talkmate.test/androidx.test.runner.AndroidJUnitRunner
 ```
 
-Она регистрирует пользователя, отправляет запись из `androidTest/assets`, сверяет оценки и статистику и сохраняет снимки всех экранов.
+It registers a user, uploads an audio fixture, checks analysis and statistics, and captures screenshots.
 
-## Отличия от макета
+## Validation limits
 
-- Декоративные шрифты макета («Mate», «speakspeak», «Stats») не опознаны по картинке. Вместо них подключены Yeseva One и Poiret One с открытой лицензией OFL, основной текст набран системным Roboto. Чтобы поставить оригинальные шрифты, замените файлы в `android/app/src/main/res/font/`.
-- Надписи «Sing Up» и «Sing UP» перенесены из макета как есть. Если это опечатка, правятся две строки в `android/app/src/main/res/values/strings.xml`.
-- В форме регистрации добавлено поле Email: оно есть в схеме базы и в примере теста, а на макете его нет. По той же причине вход идёт по email, хотя на макете поле подписано Username. Телефон, дата рождения и пол необязательны.
-- На главном экране под названием стоит приветствие с именем. На макете его нет, но тест со слайда 15 проверяет элемент `tvWelcomeMessage`.
-- На всех внутренних экранах есть кнопка «назад», на экране входа ссылка «Забыли пароль?» и отдельный экран восстановления. В макете их нет.
-- Текст на кнопках, в полях и на графиках крупнее, чем в макете: по макету он плохо читался на телефоне.
-- На экране результатов есть кнопка «Показать расшифровку». Текст разбит на фразы: слова-заполнители выделены цветом, над фразой подписано, если её темп вне нормы или в голосе слышна эмоция.
-- Таймер записи показывает миллисекунды. На экране результатов есть строка «Чёткость речи» и блок с основной мыслью, ключевыми словами и оценкой структуры.
-- Главный экран сделан по отдельному макету, присланному позже презентации: логотип, карточка «Говори увереннее» с кнопкой начала тренировки, карточки «Статьи» и «Мой прогресс».
-- На графиках норма показана пунктирными линиями и подписана словами, а не светлой полосой, как на слайде 16.
-- На экран записи добавлена подсказка о состоянии, на экран результатов кнопка «Записать заново» и строка с найденными заполнителями, на экран ошибки текст причины и кнопка повтора.
-- Графиков статистики четыре: скорость, заполнители, громкость и выразительность интонации.
-
-## Отличия от презентации в серверной части
-
-- Вместо Yandex SpeechKit стоит собственное распознавание на GigaAM-v3.
-- Модель эмоций обучена на Dusha и RESD вместе, а не на одной Dusha, и обучалась только голова поверх замороженного кодировщика.
-- Удаление шума перед моделью эмоций выключено.
-
-Причины и замеры по каждому пункту в [docs/MODELS.md](docs/MODELS.md).
-
-## Что не проверено
-
-- Запись голоса с микрофона телефона. В эмуляторе микрофон молчит: диктофон проверен на корректность файла и паузы, сервер этот файл читает, а распознавание проверялось на готовых записях и открытых датасетах.
-- Страница администратора в браузере. API под ней покрыт тестами, сам скрипт прошёл только проверку синтаксиса.
-- Полное дообучение кодировщика модели эмоций. Скрипт проверен на крошечной модели, на настоящей он не запускался: памяти этого компьютера не хватило.
-- Качество моделей на записях самих пользователей приложения. Все замеры сделаны на открытых датасетах.
+- Recorder tests cover file output and pause behavior; model benchmarks use prerecorded audio. Microphone capture and analysis still need systematic checks on physical phones.
+- The admin API has tests, but the browser interface has not received a full interaction review.
+- Encoder fine-tuning was tested on a small model. A full run of the supplied encoder fine-tuning configuration was not completed on the development machine because of memory limits.
+- Reported model quality comes from project evaluations on public datasets and recorded talks. Performance on recordings from app users has not yet been established.

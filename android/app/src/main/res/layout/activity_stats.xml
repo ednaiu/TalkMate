@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="22dp"
-            android:fontFamily="@font/yeseva_one"
+            android:fontFamily="sans-serif-medium"
             android:text="@string/stats"
             android:textColor="@color/ink"
             android:textSize="28sp" />
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_chart_pink"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="sans-serif"
             android:lineSpacingExtra="5dp"
             android:padding="28dp"
             android:text="@string/stats_empty"

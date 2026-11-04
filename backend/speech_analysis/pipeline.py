@@ -12,6 +12,7 @@ from .slide_match import match_slides
 from .slides import SlidesError
 from .summarizer import summarize_safely
 from .monotony import classify_monotony, pitch_variability
+from .noise import classify_noise, estimate_snr_db
 from .speed import speech_rate
 from .thresholds import for_language
 from .volume import classify_volume, mean_volume_db
@@ -39,6 +40,9 @@ class AnalysisResult:
     slides: dict | None = None
     # Язык речи, по правилам которого сделан разбор: ru или en.
     language: str = "ru"
+    # Насколько речь громче фона, дБ, и вывод: clean, noisy или None, если не определено.
+    snr_db: float | None = None
+    noise_level: str | None = None
 
 
 def analyze(path, thresholds, recognizer, emotion_backend=None, summarizer=None, slides_path=None, slide_reader=None,
@@ -82,6 +86,7 @@ def evaluate(samples, duration, text, tokens, thresholds, language, emotion_back
     variability = pitch_variability(samples)
     found = fillers_mod.find_fillers(text)
     clarity = clarity_score([token[2] for token in tokens if len(token) > 2 and token[0].strip()])
+    snr = estimate_snr_db(samples)
     segments = build_segments(tokens, duration, thresholds, samples, SAMPLE_RATE,
                               emotion=(lambda chunk: detect_emotion(emotion_backend, chunk)) if emotion_backend else None)
 
@@ -104,6 +109,8 @@ def evaluate(samples, duration, text, tokens, thresholds, language, emotion_back
         segments=segments,
         slides=compare_with_slides(slides_path, slide_reader, segments, duration, slide_times, embedder),
         language=language,
+        snr_db=snr,
+        noise_level=classify_noise(snr, thresholds),
     )
 
 

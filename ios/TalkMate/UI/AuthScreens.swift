@@ -1,59 +1,5 @@
 import SwiftUI
 
-struct WelcomeView: View {
-    @EnvironmentObject private var app: AppState
-    @State private var serverShown = false
-
-    var body: some View {
-        VStack(spacing: 0) {
-            Spacer(minLength: 12)
-            WelcomeArt()
-
-            VStack(spacing: -14) {
-                Text("Talk").font(.thin(64)).scaleEffect(x: 0.72).accessibilityIdentifier("tvTalk")
-                Text("Mate").font(.display(76)).accessibilityIdentifier("tvMate")
-            }
-            .foregroundStyle(Color.tmInk)
-            .padding(.top, 28)
-            .contentShape(Rectangle())
-            .onLongPressGesture { serverShown = true }
-
-            Text(L("Тренируй речь и готовься\nк публичным выступлениям", "Practice your speech and get ready\nfor public speaking"))
-                .font(.system(size: 20)).foregroundStyle(Color.tmSubtitle)
-                .multilineTextAlignment(.center).lineSpacing(4)
-                .padding(.top, 24)
-                .accessibilityIdentifier("tvSubtitle")
-
-            if let notice = app.notice {
-                Text(notice).font(.system(size: 16)).foregroundStyle(Color.tmGreyTitle)
-                    .multilineTextAlignment(.center).padding(.top, 16)
-                    .accessibilityIdentifier("tvNotice")
-            }
-
-            Button { app.notice = nil; app.path.append(.signUp) } label: {
-                Text(L("Создать аккаунт", "Create account")).font(.system(size: 19, weight: .semibold)).foregroundStyle(.white)
-                    .frame(maxWidth: .infinity, minHeight: 60)
-                    .background(Capsule().fill(Color.tmBlueStrong))
-            }
-            .padding(.top, 40)
-            .accessibilityIdentifier("btnRegistration")
-
-            HStack(spacing: 6) {
-                Text(L("Уже есть аккаунт?", "Already have an account?")).font(.system(size: 17)).foregroundStyle(Color.tmSubtitle)
-                Button(L("Войти", "Log in")) { app.notice = nil; app.path.append(.login) }
-                    .font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.tmBlueStrong)
-                    .frame(minHeight: 44)
-                    .accessibilityIdentifier("btnLogin")
-            }
-            .padding(.top, 10)
-            Spacer(minLength: 12)
-        }
-        .padding(.horizontal, 24)
-        .background(Color.tmPaper.ignoresSafeArea())
-        .serverAlert($serverShown)
-    }
-}
-
 /// Общий каркас экранов с формой: розовая шапка с кнопкой «назад» и приветствием, белый лист с полями.
 struct FormScreen<Content: View>: View {
     let hello: String
@@ -102,10 +48,10 @@ struct AuthScreen<Content: View, Footer: View>: View {
             VStack(spacing: 0) {
                 BackButton().frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 4).padding(.top, 8)
                 WelcomeArt(blob: .tmPinkShape).frame(width: artWidth)
-                Text("Talk Mate").font(.system(size: 16)).foregroundStyle(Color.tmSubtitle).padding(.top, 4)
+                Text("Talk Mate").font(.wordmark(16)).foregroundStyle(Color.tmSubtitle).padding(.top, 4)
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(title).font(.system(size: 30, weight: .medium)).foregroundStyle(Color.tmInk).accessibilityIdentifier("tvTitle")
-                    Text(subtitle).font(.system(size: 16)).foregroundStyle(Color.tmGreyTitle).padding(.top, 6)
+                    Text(title).font(.interface(30, weight: .medium)).foregroundStyle(Color.tmInk).accessibilityIdentifier("tvTitle")
+                    Text(subtitle).font(.interface(16)).foregroundStyle(Color.tmGreyTitle).padding(.top, 6)
                         .accessibilityIdentifier("tvHello")
                     content
                 }
@@ -139,9 +85,9 @@ struct AuthSwitch: View {
 
     var body: some View {
         HStack(spacing: 6) {
-            Text(question).font(.system(size: 17)).foregroundStyle(Color.tmSubtitle)
+            Text(question).font(.interface(17)).foregroundStyle(Color.tmSubtitle)
             Button(link, action: action)
-                .font(.system(size: 17, weight: .semibold)).foregroundStyle(Color.tmBlueStrong)
+                .font(.interface(17, weight: .semibold)).foregroundStyle(Color.tmBlueStrong)
                 .frame(minHeight: 44)
                 .accessibilityIdentifier(id)
         }
@@ -163,7 +109,7 @@ struct LoginView: View {
             Button(L("Забыли пароль?", "Forgot your password?")) {
                 app.path.append(.resetPassword(email: email.trimmingCharacters(in: .whitespaces)))
             }
-            .font(.system(size: 16)).foregroundStyle(Color.tmBlueStrong)
+            .font(.interface(16)).foregroundStyle(Color.tmBlueStrong)
             .frame(maxWidth: .infinity, minHeight: 44, alignment: .trailing)
             .accessibilityIdentifier("tvForgot")
             FormError(text: error)
@@ -219,7 +165,7 @@ struct SignUpView: View {
             AuthField(label: L("Телефон", "Phone"), hint: "+7 …", text: $phone, id: "etPhone", keyboard: .phonePad, contentType: .telephoneNumber)
             AuthField(label: L("Дата рождения", "Date of birth"), hint: L("ДД.ММ.ГГГГ", "DD.MM.YYYY"), text: $birth, id: "etBirthDate", keyboard: .numbersAndPunctuation,
                       icon: "calendar", iconLabel: L("Выбрать дату", "Pick a date")) { datePickerShown = true }
-            Text(L("Пол", "Gender")).font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.tmFieldLabel).padding(.top, 16)
+            Text(L("Пол", "Gender")).font(.interface(15, weight: .semibold)).foregroundStyle(Color.tmFieldLabel).padding(.top, 16)
             HStack(spacing: 40) {
                 genderButton("female", title: L("Женский", "Female"), label: L("Женский пол", "Female"), id: "btnFemale")
                 genderButton("male", title: L("Мужской", "Male"), label: L("Мужской пол", "Male"), id: "btnMale")
@@ -262,7 +208,7 @@ struct SignUpView: View {
                     .fill(gender == value ? Color.tmBlue : Color.tmBlueLight)
                     .frame(width: 30, height: 42)
                     .frame(width: 56, height: 50)
-                Text(title).font(.system(size: 14)).foregroundStyle(Color.tmFieldLabel)
+                Text(title).font(.interface(14)).foregroundStyle(Color.tmFieldLabel)
             }
             .contentShape(Rectangle())
         }

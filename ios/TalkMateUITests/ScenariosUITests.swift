@@ -15,6 +15,12 @@ class UITestBase: XCTestCase {
         app.launch()
     }
 
+    func openSignUp() {
+        tap("btnRegistration")
+        tap("btnRegistration")
+        tap("btnRegistration")
+    }
+
     func launchLoggedIn(_ environment: [String: String] = [:]) {
         launch(environment.merging(["FAKE_LOGGED_IN": "1"]) { $1 })
     }
@@ -56,7 +62,7 @@ final class AuthUITests: UITestBase {
         assertLabel("tvTalk", "Talk")
         assertLabel("tvMate", "Mate")
         XCTAssertEqual(button("btnLogin").label, "Войти")
-        XCTAssertEqual(button("btnRegistration").label, "Создать аккаунт")
+        XCTAssertEqual(button("btnRegistration").label, "Начать репетицию")
     }
 
     func testLoginButtonOpensLoginForm() {
@@ -69,7 +75,7 @@ final class AuthUITests: UITestBase {
 
     func testRegistrationButtonOpensSignUpForm() {
         launch()
-        tap("btnRegistration")
+        openSignUp()
         assertLabel("tvHello", "Сохраняй результаты тренировок")
         assertLabel("tvTitle", "Создать аккаунт")
         XCTAssertEqual(app.textFields["etName"].placeholderValue, "Как к тебе обращаться")
@@ -85,7 +91,7 @@ final class AuthUITests: UITestBase {
     /// Сценарий из спецификации: регистрация нового пользователя.
     func testRegistration() {
         launch()
-        tap("btnRegistration")
+        openSignUp()
         type("etName", "John Doe")
         type("etEmail", "johndoe@example.com")
         type("etPassword", "password", secure: true)
@@ -95,7 +101,7 @@ final class AuthUITests: UITestBase {
 
     func testRegistrationRequiresName() {
         launch()
-        tap("btnRegistration")
+        openSignUp()
         type("etEmail", "new@itmo.ru")
         type("etPassword", "password", secure: true)
         tap("btnRegister")
@@ -104,7 +110,7 @@ final class AuthUITests: UITestBase {
 
     func testRegistrationRejectsBadEmailAndShortPassword() {
         launch()
-        tap("btnRegistration")
+        openSignUp()
         type("etName", "Edna")
         type("etEmail", "not-an-email")
         type("etPassword", "123", secure: true)
@@ -117,7 +123,7 @@ final class AuthUITests: UITestBase {
 
     func testRegistrationRejectsBadBirthDate() {
         launch()
-        tap("btnRegistration")
+        openSignUp()
         type("etName", "Edna")
         type("etEmail", "new@itmo.ru")
         type("etPassword", "password", secure: true)
@@ -128,7 +134,7 @@ final class AuthUITests: UITestBase {
 
     func testRegistrationWithTakenEmailShowsServerMessage() {
         launch()
-        tap("btnRegistration")
+        openSignUp()
         type("etName", "Edna")
         type("etEmail", "edna@itmo.ru")
         type("etPassword", "password", secure: true)
@@ -139,7 +145,7 @@ final class AuthUITests: UITestBase {
 
     func testGenderToggle() {
         launch()
-        tap("btnRegistration")
+        openSignUp()
         tap("btnFemale")
         XCTAssertTrue(button("btnFemale").isSelected)
         XCTAssertFalse(button("btnMale").isSelected)
@@ -295,7 +301,7 @@ final class HomeUITests: UITestBase {
         tap("btnLogin")
         tap("btnBack")
         shown(text("tvMate"))
-        tap("btnRegistration")
+        openSignUp()
         tap("btnBack")
         shown(text("tvMate"))
     }
@@ -310,7 +316,9 @@ final class HomeUITests: UITestBase {
         // Снимок личного кабинета для просмотра глазами; лежит во временной папке симулятора.
         try? XCUIScreen.main.screenshot().pngRepresentation.write(to: URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("talkmate_profile.png"))
         tap("btnSettings")
-        shown(app.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "edna@itmo.ru")).firstMatch)
+        shown(text("settingsTitle"))
+        app.swipeUp()
+        tap("btnLogout")
         app.buttons["Выйти"].tap()
         shown(button("btnRegistration"))
     }
@@ -441,13 +449,15 @@ final class TrainingUITests: UITestBase {
         tap("btnRecordPause")
         tap("btnStop")
         tap("btnAnalyze")
-        assertLabel("tvResultsTitle", "Результаты")
-        assertLabel("tvRecommendationsTitle", "Рекомендации")
+        assertLabel("tvResultsTitle", "Разбор репетиции")
+        assertLabel("tvRecommendationsTitle", "Что попробовать")
         assertLabel("tvRate", "250 сл/мин")
+        app.swipeUp()
+        tap("btnAllMetrics")
         assertLabel("tvVolume", "тихая")
-        assertLabel("tvMonotony", "выразительная")
-        assertLabel("tvEmotion", "нейтральная")
-        assertLabel("tvClarity", "средняя, 86%")
+        assertLabel("tvMonotony", "разнообразная")
+        XCTAssertFalse(text("tvEmotion").exists)
+        assertLabel("tvClarity", "средняя")
         assertLabel("tvFillers", "5 слов")
         assertLabel("tvFillerWords", "Чаще всего: «ну», «вот»")
         assertLabel("tvMainIdea", "Сегодня я расскажу о нашем приложении.")
@@ -455,8 +465,7 @@ final class TrainingUITests: UITestBase {
         assertLabel("tvStructure", "частичная")
         XCTAssertTrue(text("tvStructureSummary").label.contains("заключения нет"))
         app.swipeUp()
-        assertLabel("tvRecTitle", "У вас здорово получается!")
-        assertLabel("tvRecText", "В следующий раз попробуйте увеличить громкость вашего голоса.")
+        XCTAssertTrue(text("tvRecText").label.contains("Запиши одну фразу"))
         tap("btnBack")
         shown(button("btnStartTraining"))
     }
@@ -503,16 +512,18 @@ final class TrainingUITests: UITestBase {
         tap("btnRecordPause")
         tap("btnAnalyze")
         assertLabel("tvRate", "96 сл/мин")
+        app.swipeUp()
+        tap("btnAllMetrics")
         assertLabel("tvVolume", "громкая")
-        assertLabel("tvMonotony", "монотонная")
-        assertLabel("tvEmotion", "не определена")
+        assertLabel("tvMonotony", "мало изменений")
+        XCTAssertFalse(text("tvEmotion").exists)
         assertLabel("tvClarity", "не определена")
         assertLabel("tvFillers", "1 слово")
         XCTAssertFalse(text("tvFillerWords").exists)
         XCTAssertFalse(text("tvMainIdea").exists)     // сервер не прислал содержание
         // Сервер не прислал текст: кнопки расшифровки нет.
         XCTAssertFalse(button("btnTranscript").exists)
-        app.swipeUp()
+        for _ in 0..<5 { app.swipeDown() }
         tap("btnAgain")
         assertLabel("tvTitle", "ЗАПИСЬ")
         assertLabel("tvTimer", "00:00.000")

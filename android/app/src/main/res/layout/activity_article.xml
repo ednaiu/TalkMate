@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="18dp"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="sans-serif"
             android:lineSpacingExtra="6dp"
             android:textColor="@color/grey_title"
             android:textSize="26sp"
@@ -50,7 +50,7 @@
                 android:id="@+id/tvArticleContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="sans-serif"
                 android:lineSpacingExtra="7dp"
                 android:textColor="@color/grey_text"
                 android:textSize="18sp" />

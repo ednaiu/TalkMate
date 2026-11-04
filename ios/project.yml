@@ -16,7 +16,11 @@ targets:
   TalkMate:
     type: application
     platform: iOS
-    sources: [TalkMate]
+    sources:
+      - path: TalkMate
+        excludes: [Resources/Legal]
+      - path: TalkMate/Resources/Legal
+        buildPhase: resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: ru.itmo.talkmate
@@ -29,7 +33,7 @@ targets:
         CFBundleDisplayName: TalkMate
         UILaunchScreen:
           UIColorName: Pink
-        UIAppFonts: [YesevaOne-Regular.ttf, PoiretOne-Regular.ttf]
+        UIAppFonts: [Manrope.ttf]
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         NSMicrophoneUsageDescription: Микрофон нужен, чтобы записать ваше выступление и оценить речь.
         # Сервер разработки работает по HTTP в локальной сети. Для боевого сервера с HTTPS исключение нужно убрать.

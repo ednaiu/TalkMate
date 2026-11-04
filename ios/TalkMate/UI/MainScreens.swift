@@ -10,11 +10,7 @@ struct HomeView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
-                    VStack(alignment: .leading, spacing: -8) {
-                        Text("Talk").font(.thin(34)).scaleEffect(x: 0.72, anchor: .leading).accessibilityIdentifier("tvTalk")
-                        Text("Mate").font(.display(36)).accessibilityIdentifier("tvMate")
-                    }
-                    .foregroundStyle(Color.tmInk)
+                    BrandWordmark(size: 34)
                     Spacer()
                     Button { app.path = [.profile] } label: { Face().frame(width: 52, height: 52) }
                         .accessibilityLabel(L("Профиль", "Profile")).accessibilityIdentifier("btnProfile")
@@ -55,9 +51,9 @@ struct HomeView: View {
         VStack(spacing: 18) {
             HStack(alignment: .center) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(L("ТРЕНИРОВКА РЕЧИ", "SPEECH PRACTICE")).font(.system(size: 13)).kerning(1.6).foregroundStyle(Color.tmGreyTitle)
+                    Text(L("ТРЕНИРОВКА РЕЧИ", "SPEECH PRACTICE")).font(.interface(13)).kerning(1.6).foregroundStyle(Color.tmGreyTitle)
                         .accessibilityIdentifier("tvCaption")
-                    Text(L("Говори\nувереннее", "Speak with\nconfidence")).font(.system(size: 35, weight: .bold)).foregroundStyle(Color.tmInk)
+                    Text(L("Говори\nувереннее", "Speak with\nconfidence")).font(.interface(35, weight: .bold)).foregroundStyle(Color.tmInk)
                         .lineSpacing(-4).fixedSize(horizontal: false, vertical: true)
                         .accessibilityIdentifier("tvHomeTitle")
                     Text(L("Запиши выступление и узнай, как улучшить свою речь", "Record a talk and learn how to improve your speech")).font(.light(17)).foregroundStyle(Color.tmGreyTitle)
@@ -68,7 +64,7 @@ struct HomeView: View {
             }
             .padding(.leading, 8)
             Button { app.path.append(.record) } label: {
-                Text(L("Начать тренировку  →", "Start practice  →")).font(.system(size: 18, weight: .bold)).foregroundStyle(.white)
+                Text(L("Начать тренировку  →", "Start practice  →")).font(.interface(18, weight: .bold)).foregroundStyle(.white)
                     .frame(maxWidth: .infinity, minHeight: 58)
                     .background(Capsule().fill(Color.tmBlueStrong))
             }
@@ -87,7 +83,7 @@ struct HomeView: View {
             HStack(spacing: 24) {
                 icon
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(title).font(.system(size: 21, weight: .bold)).foregroundStyle(Color.tmInk)
+                    Text(title).font(.interface(21, weight: .bold)).foregroundStyle(Color.tmInk)
                     // Подпись переносится на вторую строку, а не обрезается многоточием.
                     Text(subtitle).font(.light(16)).foregroundStyle(Color.tmGreyTitle)
                         .multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
@@ -158,7 +154,7 @@ struct ArticlesView: View {
                 SVGShape(data: Art.asterisk, viewBox: CGSize(width: 40, height: 40)).fill(Color.tmPinkShape).frame(width: 36, height: 36)
                 SVGShape(data: Art.flower, viewBox: CGSize(width: 44, height: 40)).fill(Color.tmPinkShape).frame(width: 40, height: 36)
                 Spacer()
-                Text(L("СТАТЬИ", "ARTICLES")).font(.system(size: 26, weight: .bold)).foregroundStyle(Color.tmInk).accessibilityIdentifier("tvTitle")
+                Text(L("СТАТЬИ", "ARTICLES")).font(.interface(26, weight: .bold)).foregroundStyle(Color.tmInk).accessibilityIdentifier("tvTitle")
             }
             .padding(.horizontal, 22).padding(.top, 4).padding(.bottom, 24)
 
@@ -330,10 +326,10 @@ struct LineChart: View {
     var body: some View {
         let textColor: Color = blue ? .white : .tmGreyTitle
         VStack(alignment: .leading, spacing: 4) {
-            Text(title).font(.system(size: 17)).foregroundStyle(textColor)
-            Text(L("последняя: ", "latest: ") + Formatters.number(values.last ?? 0, decimals: decimals)).font(.system(size: 14)).foregroundStyle(textColor)
+            Text(title).font(.interface(17)).foregroundStyle(textColor)
+            Text(L("последняя: ", "latest: ") + Formatters.number(values.last ?? 0, decimals: decimals)).font(.interface(14)).foregroundStyle(textColor)
             if !note.isEmpty {
-                Text(note).font(.system(size: 13)).foregroundStyle(textColor.opacity(0.85)).fixedSize(horizontal: false, vertical: true)
+                Text(note).font(.interface(13)).foregroundStyle(textColor.opacity(0.85)).fixedSize(horizontal: false, vertical: true)
             }
             Canvas { context, size in draw(&context, size) }.frame(height: 140).padding(.top, 6)
             HStack {
@@ -341,7 +337,7 @@ struct LineChart: View {
                 Spacer()
                 if dates.count > 1 { Text(dates.last ?? "") }
             }
-            .font(.system(size: 14)).foregroundStyle(textColor)
+            .font(.interface(14)).foregroundStyle(textColor)
         }
         .padding(.horizontal, 26).padding(.vertical, 20)
         .background(RoundedRectangle(cornerRadius: 28).fill(blue ? Color.tmBlueCard : Color.tmPinkCard))

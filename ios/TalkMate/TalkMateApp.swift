@@ -6,6 +6,12 @@ struct TalkMateApp: App {
 
     init() {
         #if DEBUG
+        // Обновление адреса локального сервера при установке без сброса аккаунта.
+        if let server = ProcessInfo.processInfo.environment["TALKMATE_SERVER_OVERRIDE"],
+           Validation.serverURL(server) == nil {
+            UserDefaults.standard.set(server, forKey: "serverURL")
+            UserDefaults.standard.set(server, forKey: "settingsServerDraft")
+        }
         if ProcessInfo.processInfo.arguments.contains("-uiTesting") {
             _app = StateObject(wrappedValue: AppState(services: .uiTesting(environment: ProcessInfo.processInfo.environment)))
             UIView.setAnimationsEnabled(false)
@@ -54,6 +60,7 @@ struct RootView: View {
         case .article(let summary): ArticleView(summary: summary)
         case .stats: StatsView()
         case .profile: ProfileView()
+        case .settings: SettingsView()
         case .trainings: TrainingsView()
         }
     }

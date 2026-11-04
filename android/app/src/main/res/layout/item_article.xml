@@ -7,7 +7,7 @@
     android:background="@drawable/bg_outline_card"
     android:clickable="true"
     android:focusable="true"
-    android:fontFamily="sans-serif-light"
+    android:fontFamily="sans-serif"
     android:lineSpacingExtra="6dp"
     android:minHeight="118dp"
     android:paddingStart="24dp"

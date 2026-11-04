@@ -6,7 +6,7 @@
 import json
 from datetime import datetime, timezone
 
-from sqlalchemy import Date, DateTime, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import Boolean, Date, DateTime, Float, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -30,6 +30,9 @@ class User(Base):
     birth_date: Mapped[Date | None] = mapped_column(Date, nullable=True)
     gender: Mapped[str | None] = mapped_column(String(8), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
+    # Согласие отдавать записи для улучшения моделей: пусто, пока не спрашивали; хранится и время ответа.
+    share_recordings: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
+    share_recordings_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
     speeches = relationship("Speech", back_populates="user", cascade="all, delete-orphan")
     recommendations = relationship("Recommendation", back_populates="user", cascade="all, delete-orphan")
@@ -43,6 +46,7 @@ class User(Base):
             "phone": self.phone,
             "birth_date": self.birth_date.isoformat() if self.birth_date else None,
             "gender": self.gender,
+            "share_recordings": self.share_recordings,
             "created_at": self.created_at.isoformat(),
         }
 
@@ -68,6 +72,7 @@ class Speech(Base):
     user = relationship("User", back_populates="speeches")
     feedback = relationship("Feedback", back_populates="speech", uselist=False, cascade="all, delete-orphan")
     recommendation = relationship("Recommendation", back_populates="speech", uselist=False)
+    ratings = relationship("Rating", back_populates="speech", cascade="all, delete-orphan")
 
 
 class Feedback(Base):
@@ -90,6 +95,26 @@ class Feedback(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
     speech = relationship("Speech", back_populates="feedback")
+
+
+class Rating(Base):
+    """Оценка пользователя «верно / неверно» для одного показателя разбора. Это замер качества на живых записях."""
+
+    __tablename__ = "rating"
+    __table_args__ = (UniqueConstraint("speech_id", "metric", name="uq_rating_speech_metric"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    speech_id: Mapped[int] = mapped_column(ForeignKey("speech.id", ondelete="CASCADE"), index=True)
+    metric: Mapped[str] = mapped_column(String(32))
+    # correct или wrong
+    verdict: Mapped[str] = mapped_column(String(8))
+    comment: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
+
+    speech = relationship("Speech", back_populates="ratings")
+
+    def to_dict(self):
+        return {"metric": self.metric, "verdict": self.verdict, "comment": self.comment, "created_at": self.created_at.isoformat()}
 
 
 class Article(Base):

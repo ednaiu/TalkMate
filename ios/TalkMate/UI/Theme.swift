@@ -1,4 +1,5 @@
 import SwiftUI
+import CoreText
 
 extension Color {
     init(hex: UInt32) {
@@ -9,6 +10,8 @@ extension Color {
     static let tmPinkCard = Color(hex: 0xFCE4EC)
     static let tmPinkLine = Color(hex: 0xF7D3DF)
     static let tmPinkShape = Color(hex: 0xF7D3DF)
+    /// Контрастный акцент для текста результатов на белом фоне.
+    static let tmResultText = Color(hex: 0x4346B5)
     static let tmBlue = Color(hex: 0x8C9EF2)
     static let tmBlueCard = Color(hex: 0x97A8F5)
     static let tmBlueDark = Color(hex: 0x5B6FD6)
@@ -32,12 +35,63 @@ extension Color {
     static let tmNose = Color(hex: 0xB5DBA0)
 }
 
+/// Единый шрифтовой знак Talk Mate. Вес задаётся по оси variable-шрифта точно, без округления до 600/700.
+enum BrandType {
+    static func font(_ size: CGFloat) -> CTFont {
+        let descriptor = CTFontDescriptorCreateWithAttributes([
+            kCTFontNameAttribute: "Manrope-Regular",
+            kCTFontVariationAttribute: [NSNumber(value: 2003265652): NSNumber(value: 650)]
+        ] as CFDictionary)
+        return CTFontCreateWithFontDescriptor(descriptor, size, nil)
+    }
+}
+
+struct BrandWordmark: View {
+    enum Layout { case stacked, inline }
+
+    let size: CGFloat
+    var layout: Layout = .stacked
+
+    var body: some View {
+        Group {
+            if layout == .inline {
+                HStack(alignment: .firstTextBaseline, spacing: size * 0.22) { words }
+            } else {
+                VStack(alignment: .leading, spacing: -size * 0.12) { words }
+            }
+        }
+        .font(.wordmark(size)).tracking(-size * 0.025)
+        .foregroundStyle(Color.tmInk)
+    }
+
+    @ViewBuilder
+    private var words: some View {
+        Text("Talk").accessibilityIdentifier("tvTalk")
+        Text("Mate").accessibilityIdentifier("tvMate")
+    }
+}
+
 extension Font {
-    /// Декоративный шрифт заголовков («Mate», «speakspeak», «Stats»).
-    static func display(_ size: CGFloat) -> Font { .custom("YesevaOne-Regular", size: size) }
-    /// Тонкий шрифт слова «Talk».
-    static func thin(_ size: CGFloat) -> Font { .custom("PoiretOne-Regular", size: size) }
-    static func light(_ size: CGFloat) -> Font { .system(size: size, weight: .light) }
+    static func wordmark(_ size: CGFloat) -> Font { Font(BrandType.font(size)) }
+    /// Совместимость прежних заголовков с общей шкалой интерфейса.
+    static func display(_ size: CGFloat) -> Font { .interface(size, weight: .semibold) }
+    static func light(_ size: CGFloat) -> Font { .interface(size) }
+
+    /// Общая шкала интерфейса: системный гротеск с поддержкой Dynamic Type.
+    static func interface(_ size: CGFloat, weight: Font.Weight? = nil) -> Font {
+        let style: Font.TextStyle
+        switch size {
+        case ...12: style = .caption
+        case ...14: style = .footnote
+        case ...16: style = .callout
+        case ...19: style = .body
+        case ...21: style = .title3
+        case ...25: style = .title2
+        case ...31: style = .title
+        default: style = .largeTitle
+        }
+        return .system(style, design: .default).weight(weight ?? (size >= 20 ? .semibold : .regular))
+    }
 }
 
 /// Мини-разбор строк путей в формате SVG: команды M, L, C, Q, Z в абсолютных координатах.
@@ -231,7 +285,7 @@ struct FilledButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 16))
+            .font(.interface(16))
             .foregroundStyle(.white)
             .frame(maxWidth: .infinity, minHeight: 50)
             .background(Capsule().fill(enabled ? Color.tmBlue : Color.tmBlueLight))
@@ -242,7 +296,7 @@ struct FilledButtonStyle: ButtonStyle {
 struct OutlineButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 16))
+            .font(.interface(16))
             .foregroundStyle(Color.tmBlue)
             .frame(maxWidth: .infinity, minHeight: 50)
             .background(Capsule().stroke(Color.tmBlueLight, lineWidth: 1.5))
@@ -305,7 +359,7 @@ struct AuthField: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(label).font(.system(size: 15, weight: .semibold)).foregroundStyle(Color.tmFieldLabel)
+            Text(label).font(.interface(15, weight: .semibold)).foregroundStyle(Color.tmFieldLabel)
             HStack(spacing: 8) {
                 Group {
                     if secure && TMField.maskPasswords && !revealed {
@@ -318,7 +372,7 @@ struct AuthField: View {
                 }
                 .textContentType(TMField.autofill ? contentType : nil)
                 .autocorrectionDisabled()
-                .font(.system(size: 17))
+                .font(.interface(17))
                 .foregroundStyle(Color.tmInk)
                 .accessibilityIdentifier(id)
                 if secure {
@@ -346,7 +400,7 @@ struct StrongButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 18, weight: .semibold))
+            .font(.interface(18, weight: .semibold))
             .foregroundStyle(.white)
             .frame(maxWidth: .infinity, minHeight: 56)
             .background(Capsule().fill(enabled ? Color.tmBlueStrong : Color.tmBlueLight))
@@ -360,7 +414,7 @@ struct FormError: View {
     var body: some View {
         if let text {
             Text(text)
-                .font(.system(size: 16))
+                .font(.interface(16))
                 .foregroundStyle(Color.tmError)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
@@ -390,7 +444,7 @@ struct HelloText: View {
 
     var body: some View {
         Text(text)
-            .font(.system(size: 22, weight: .bold))
+            .font(.interface(22, weight: .bold))
             .foregroundStyle(Color.tmHello)
             .lineSpacing(4)
             .frame(maxWidth: .infinity, alignment: .leading)

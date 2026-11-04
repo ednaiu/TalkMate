@@ -1,0 +1,240 @@
+{
+  "date": "2026-11-04",
+  "platform": "iOS 27.0",
+  "device": "iPhone 17 Simulator",
+  "language": "en",
+  "appearance": "light",
+  "text_size": "standard",
+  "data": "FakeApi / FakeRecorder; synthetic PDF. No user account or real speech analysis.",
+  "screenshots": [
+    {
+      "file": "01_onboarding_1.png",
+      "title": "Onboarding: start",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "02_onboarding_2.png",
+      "title": "Onboarding: slides",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "03_onboarding_3.png",
+      "title": "Onboarding: review",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "04_terms_draft.png",
+      "title": "Terms: draft",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "05_privacy_draft.png",
+      "title": "Privacy: draft",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "06_signup_top.png",
+      "title": "Sign up: top",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "07_signup_bottom.png",
+      "title": "Sign up: bottom",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "08_login.png",
+      "title": "Log in",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "09_recovery_email.png",
+      "title": "Reset password: email",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "10_recovery_code.png",
+      "title": "Reset password: code",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "11_home.png",
+      "title": "Home",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "12_profile_top.png",
+      "title": "Profile: top",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "13_profile_bottom.png",
+      "title": "Profile: bottom",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "14_settings_top.png",
+      "title": "Settings: top",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "15_settings_bottom.png",
+      "title": "Settings: bottom",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "16_trainings.png",
+      "title": "Sessions",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "17_articles.png",
+      "title": "Articles",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "18_article_1.png",
+      "title": "Article: gestures",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "19_article_2.png",
+      "title": "Article: venue",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "20_article_3.png",
+      "title": "Article: slides",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "21_article_4.png",
+      "title": "Article: warm-up",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "22_stats_top.png",
+      "title": "Progress: top",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "23_stats_middle.png",
+      "title": "Progress: middle",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "24_record_idle.png",
+      "title": "Recording: idle",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "25_record_active.png",
+      "title": "Recording: active",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "26_record_paused.png",
+      "title": "Recording: paused",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "27_record_ready.png",
+      "title": "Recording: ready",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "28_results_summary.png",
+      "title": "Review: summary",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "29_results_metrics.png",
+      "title": "Review: metrics",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "30_results_details.png",
+      "title": "Review: details",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "31_results_content.png",
+      "title": "Review: content",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "32_results_transcript.png",
+      "title": "Review: transcript",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "33_record_with_slides.png",
+      "title": "Recording with PDF",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "34_slide_viewer.png",
+      "title": "PDF viewer: slide 2",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "35_results_slides.png",
+      "title": "Slides review",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "36_stats_empty.png",
+      "title": "Progress: empty",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "37_connection_error.png",
+      "title": "Connection error",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "38_stats_bottom.png",
+      "title": "Progress: bottom",
+      "width": 1206,
+      "height": 2622
+    }
+  ],
+  "missing": []
+}

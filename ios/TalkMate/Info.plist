@@ -33,8 +33,7 @@
 	<string>$(TALKMATE_SERVER_URL)</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>YesevaOne-Regular.ttf</string>
-		<string>PoiretOne-Regular.ttf</string>
+		<string>Manrope.ttf</string>
 	</array>
 	<key>UILaunchScreen</key>
 	<dict>

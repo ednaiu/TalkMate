@@ -35,7 +35,7 @@
                 android:id="@+id/tvResultsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="sans-serif"
                 android:text="@string/results"
                 android:textColor="@color/grey_title"
                 android:textSize="34sp" />
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="36dp"
             android:text="@string/recommendations"
-            android:textColor="@color/blue"
+            android:textColor="@color/result_text"
             android:textSize="34sp"
             android:textStyle="bold" />
 
@@ -78,7 +78,7 @@
 
                 <TextView style="@style/RowLabel" android:text="@string/row_rate" />
 
-                <TextView android:id="@+id/tvRate" style="@style/RowValue" />
+                <TextView android:id="@+id/tvRate" style="@style/RowValue" android:textColor="@color/result_text" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,7 +89,7 @@
 
                 <TextView style="@style/RowLabel" android:text="@string/row_volume" />
 
-                <TextView android:id="@+id/tvVolume" style="@style/RowValue" />
+                <TextView android:id="@+id/tvVolume" style="@style/RowValue" android:textColor="@color/result_text" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,7 +100,7 @@
 
                 <TextView style="@style/RowLabel" android:text="@string/row_monotony" />
 
-                <TextView android:id="@+id/tvMonotony" style="@style/RowValue" />
+                <TextView android:id="@+id/tvMonotony" style="@style/RowValue" android:textColor="@color/result_text" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -111,7 +111,7 @@
 
                 <TextView style="@style/RowLabel" android:text="@string/row_emotion" />
 
-                <TextView android:id="@+id/tvEmotion" style="@style/RowValue" />
+                <TextView android:id="@+id/tvEmotion" style="@style/RowValue" android:textColor="@color/result_text" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -122,7 +122,7 @@
 
                 <TextView style="@style/RowLabel" android:text="@string/row_clarity" />
 
-                <TextView android:id="@+id/tvClarity" style="@style/RowValue" />
+                <TextView android:id="@+id/tvClarity" style="@style/RowValue" android:textColor="@color/result_text" />
             </LinearLayout>
 
             <LinearLayout
@@ -134,7 +134,7 @@
 
                 <TextView style="@style/RowLabel" android:text="@string/row_fillers" />
 
-                <TextView android:id="@+id/tvFillers" style="@style/RowValue" />
+                <TextView android:id="@+id/tvFillers" style="@style/RowValue" android:textColor="@color/result_text" />
             </LinearLayout>
 
             <TextView
@@ -142,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="sans-serif"
                 android:textColor="@color/grey_title"
                 android:textSize="16sp"
                 android:visibility="gone" />
@@ -165,7 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/main_idea_title"
-                android:textColor="@color/blue"
+                android:textColor="@color/result_text"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -183,7 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="sans-serif"
                 android:textColor="@color/grey_title"
                 android:textSize="16sp"
                 android:visibility="gone" />
@@ -200,11 +200,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/structure_title"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/result_text"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <TextView android:id="@+id/tvStructure" style="@style/RowValue" />
+                <TextView android:id="@+id/tvStructure" style="@style/RowValue" android:textColor="@color/result_text" />
             </LinearLayout>
 
             <TextView
@@ -212,7 +212,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="sans-serif"
                 android:lineSpacingExtra="4dp"
                 android:textColor="@color/grey_title"
                 android:textSize="16sp" />
@@ -235,7 +235,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/slides_title"
-                android:textColor="@color/blue"
+                android:textColor="@color/result_text"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -253,7 +253,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="sans-serif"
                 android:lineSpacingExtra="4dp"
                 android:textColor="@color/grey_title"
                 android:textSize="16sp" />
@@ -273,7 +273,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="34dp"
             android:layout_marginEnd="10dp"
-            android:textColor="@color/blue"
+            android:textColor="@color/result_text"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -284,9 +284,9 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="10dp"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="sans-serif"
             android:lineSpacingExtra="5dp"
-            android:textColor="@color/grey_text"
+            android:textColor="@color/grey_title"
             android:textSize="19sp" />
 
         <com.google.android.material.button.MaterialButton
@@ -304,7 +304,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="10dp"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="sans-serif"
             android:lineSpacingExtra="3dp"
             android:textColor="@color/grey_title"
             android:textSize="15sp"
@@ -316,7 +316,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/bg_outline_card"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="sans-serif"
             android:lineSpacingExtra="6dp"
             android:paddingStart="22dp"
             android:paddingTop="24dp"

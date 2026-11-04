@@ -36,6 +36,7 @@ enum Route: Hashable {
     case article(ArticleSummary)
     case stats
     case profile
+    case settings
     case trainings
 }
 

@@ -2,6 +2,7 @@
 from flask import Blueprint, g, jsonify
 
 from ..services.article_service import ArticleService
+from ..services.quality_service import QualityService
 from ..services.threshold_service import ThresholdService
 from ..services.user_service import UserService
 from .common import admin_required, json_body
@@ -58,3 +59,9 @@ def list_users():
 @admin_required
 def edit_user(user_id):
     return jsonify(UserService(g.db).edit(user_id, json_body()).to_dict())
+
+
+@bp.get("/ratings/summary")
+@admin_required
+def ratings_summary():
+    return jsonify(QualityService(g.db, None).summary())
