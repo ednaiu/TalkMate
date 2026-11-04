@@ -4,10 +4,17 @@ Talk Mate is a public speaking practice app for iPhone and Android. Record a reh
 
 Speech recognition and analysis run on a self-hosted Python backend. Audio is sent to that backend rather than a third-party speech API. Model weights are downloaded on first use. The project began as a bachelor's thesis prototype; the original presentation is included in the repository.
 
-## Screens and documentation
+## Portfolio and case study
 
-- [English screen gallery](docs/screens/current-ios-en/index.html) and [screen list](docs/screens/current-ios-en/README.md)
-- [Russian screen gallery](docs/screens/current-ios/index.html) and [screen list](docs/screens/current-ios/README.md)
+- [Edna Iusupova: portfolio](https://ednaiu.github.io/)
+- [Talk Mate: project case study](https://ednaiu.github.io/talk-mate/)
+- [App screens](https://ednaiu.github.io/talk-mate/#screens)
+- [Speech recognition and models](https://ednaiu.github.io/talk-mate/#models)
+
+## Technical documentation
+
+- [English screenshot inventory](docs/screens/current-ios-en/README.md)
+- [Russian screenshot inventory](docs/screens/current-ios/README.md)
 - [Model evaluation and experiments](docs/MODELS.md) (Russian)
 - [User guide](docs/USER_GUIDE.md) (Russian)
 - [Repository structure and local artifacts](docs/REPOSITORY.md) (Russian)
